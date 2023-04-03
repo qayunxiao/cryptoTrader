@@ -16,14 +16,16 @@ import  requests
 
 from utils.handle_path import data_ccxt_path
 from utils.handle_log import log
+from utils.operationConfig import OperationConfig
 
 
 class get_api_fear():
 
     def __init__(self):
+        self.confdata = OperationConfig().get_apiinfo()
         self.current_fear_value = []
         self.filepath= os.path.join(data_ccxt_path,"FEAR.csv")
-        self.url = 'https://alternative.me/api/crypto/fear-and-greed-index/history'
+        self.url = self.confdata['api_fear']
         self.headers = {
             "authority":"alternative.me",
             "method":"POST",

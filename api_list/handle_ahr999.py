@@ -17,15 +17,17 @@ import  requests
 
 from utils.handle_path import data_ccxt_path
 from utils.handle_log import log
+from utils.operationConfig import OperationConfig
 
 
 class get_api_ahr999():
 
     def __init__(self):
+        self.confdata = OperationConfig().get_apiinfo()
         self.ahr999_count={}
         self.ahr999_datadict={}
         self.filepath= os.path.join(data_ccxt_path,"AHR.csv")
-        self.url = 'https://dncapi.soulbab.com/api/v2/index/arh999?code=bitcoin&webp=1'
+        self.url = self.confdata['api_arh999']
         self.headers = {
             "authority":"dncapi.soulbab.com",
             "method":"GET",

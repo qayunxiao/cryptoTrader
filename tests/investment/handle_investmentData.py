@@ -3,14 +3,17 @@
 # @Author  : alvin
 # @File    : handle_investmentData.py
 # @Software: PyCharm
+import os
 
 import  numpy as np
 import matplotlib.pyplot as plt
 # import matplotlib.finance as mpf
+from utils.handle_path import data_investment_path
 
-def testBi():
+
+def aestBi():
     #sma 5
-    filename="./hasbtc.csv"
+    filename= "../../data/investment/hasbtc.csv"
     price,count,cost  = np.loadtxt(
         fname=filename,
         delimiter=',',
@@ -27,7 +30,8 @@ def testBi():
     # plt.plot(cost,linewidth=2)
     plt.show()
 #获取持仓数量和成本均价
-def testhasBiprice(filename=".has/btcbak.csv"):
+def atesthasBiprice(filename="btcbak.csv"):
+    filename=os.path.join(data_investment_path,filename)
     price,count,cost  = np.loadtxt(
         fname=filename,
         delimiter=',',
@@ -46,7 +50,8 @@ def testhasBiprice(filename=".has/btcbak.csv"):
     # plt.show()
 
 
-def testBijihuaprice(filename="./btcbak.csv"):
+def atestBijihuaprice(filename="btcbak.csv"):
+    filename=os.path.join(data_investment_path,filename)
     price,count  = np.loadtxt(
         fname=filename,
         delimiter=',',
@@ -67,7 +72,9 @@ def testBijihuaprice(filename="./btcbak.csv"):
 
 if __name__ == '__main__':
     # testReadFile()
-    path ="./hasbtc.csv"
-    testhasBiprice(path)
-    path1 ="./jihua_eth.csv"
-    testBijihuaprice(path1)
+
+    data_path = os.path.join(data_investment_path,"hasbtc.csv")
+    atesthasBiprice(data_path)
+
+    data_path = os.path.join(data_investment_path,"jihua_eth.csv")
+    atestBijihuaprice(data_path)
