@@ -45,7 +45,7 @@ class get_api_ahr999():
             "sec-fetch-site":"cross-site",
             "user-agent":'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
         }
-
+    #返回get到的data字段
     def get_ahr(self):
         # print("url:",self.url)
         res = requests.get(url=self.url)
