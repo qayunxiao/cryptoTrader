@@ -1,10 +1,14 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 # @Time    : 2023/3/13 9:43
 # @Author  : alvin
 # @File    : handle_main.py
 # @Software: PyCharm
+import os
+import sys
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(BASE_DIR)
 import time
-
+time.sleep(2)
 from utils.crypto.handle_getKline import get_data
 from utils.crypto.handle_Kline import dealdata
 from utils.handle_email import send_mail
@@ -14,7 +18,6 @@ from api_list.handle_ahr999 import get_api_ahr999
 from api_list.handle_fear import  get_api_fear
 
 if __name__ == '__main__':
-
     # print("获取恐慌数据并离线计算")
     resapi_fear = get_api_fear()
     resapi_fear.write_fear_data()
