@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 # @Time    : 2023/3/17 15:38
 # @Author  : alvin
 # @File    : handle.py

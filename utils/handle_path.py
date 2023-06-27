@@ -15,12 +15,13 @@ project_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(project_path)
 
 #2- 配置路径
-config_path = os.path.join(project_path,'configs')
-#print(config_path)
+config_path = os.path.join(project_path,'config','config.ini')
+print(config_path)
 
 #3- 数据路径
 data_ccxt_path = os.path.join(project_path,'data','ccxt_binance_data')
 data_investment_path = os.path.join(project_path,'data','investment')
+data_job_path = os.path.join(project_path,'data','job_data')
 # print("data_ccxt_path",data_ccxt_path)
 
 #5- log路径
@@ -32,7 +33,7 @@ def get_newlogfile():
     # print(list)
     lists.sort(key=lambda fn:os.path.getmtime(log_path + "\\" + fn))#按时间排序
     file_new = os.path.join(log_path,lists[-1])                     #获取最新的文件保存到file_new
-    # print(file_new)
+    print(file_new)
     return file_new
 
 if __name__ == '__main__':

@@ -55,6 +55,7 @@ class get_api_ahr999():
 
     def write_ahr_data(self):
         # print("——————————————write_fear_data————————————————————",self.filepath)
+        print("self.filepath",self.filepath)
         data_ahr =self.get_ahr()
         if os.path.exists(self.filepath):  # 判断文件是否存在
             os.remove(self.filepath)
@@ -82,13 +83,19 @@ class get_api_ahr999():
     def get_ahr999_count(self):
         if len(self.ahr999_count) > 0:
             # print("get_ahr999_count",self.ahr999_count)
-            cdp=round((self.ahr999_count['抄底'])/(self.ahr999_count['总次数']),4)
-            dtp=round((self.ahr999_count['定投'])/(self.ahr999_count['总次数']),4)
+            cdp=round(round((self.ahr999_count['抄底']),4)/round((self.ahr999_count['总次数']),4),4)
+            dtp=round(round((self.ahr999_count['定投']),4)/round((self.ahr999_count['总次数']),4),4)
             print( "ahr指标:样本数据总数:{},其中低于0.45的抄底次数:{},占比:{}%,其中适合定投的次数:{},占比:{}%"
                        .format((self.ahr999_count['总次数']),(self.ahr999_count['抄底']),(cdp*100),(self.ahr999_count['定投']),(dtp*100) ))
-            log.warn( "ahr指标:样本数据总数:{},其中低于0.45的抄底次数:{},占比:{}%,其中适合定投的次数:{},占比:{}%"
+            log.info( "ahr指标:样本数据总数:{},其中低于0.45的抄底次数:{},占比:{}%,其中适合定投的次数:{},占比:{}%"
                    .format((self.ahr999_count['总次数']),(self.ahr999_count['抄底']),(cdp*100),(self.ahr999_count['定投']),(dtp*100) ))
-            return self.ahr999_count
+        return self.ahr999_count
+
+    def read_ahr_file(self):
+        with open(self.filepath,'r',encoding='utf-8') as f:
+            for i in f:
+                if "2023-02-25 08:00:14" in i:
+                    print(i,end='')
 
     def deal_ahr_data(self,halve=None):
         global skiprows
@@ -170,11 +177,12 @@ class get_api_ahr999():
 
 
 if __name__ == '__main__':
+    print("__name__",__name__)
     resapi = get_api_ahr999()
     # resapi.get_ahr()
-    resapi.write_ahr_data()
-    resapi.deal_ahr_data()
-    resapi.deal_ahr_data(halve=3)
-    resapi.deal_ahr_data(halve=2)
-    resapi.get_ahr999_data()
-    a=resapi.get_ahr999_count()
+    resapi.read_ahr_file()
+    # resapi.deal_ahr_data()
+    # resapi.deal_ahr_data(halve=3)
+    # resapi.deal_ahr_data(halve=2)
+    # resapi.get_ahr999_data()
+    # a=resapi.get_ahr999_count()

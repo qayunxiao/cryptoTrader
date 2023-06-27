@@ -18,8 +18,7 @@ class OperationConfig( object ):
     def get_sendmail_info(self, contents="mail"):
         tmpdict = {}
         config = configparser.ConfigParser()
-        config.read( self.testdata.data_dir( 'config', 'config.ini' ),
-                     encoding="utf-8-sig" )
+        config.read( self.testdata.data_dir( 'config', 'config.ini' ),encoding="utf-8-sig" )
         send_user = config.get( contents, 'SEND_USER' )
         send_from = config.get( contents, 'SEND_FROM' )
         host = config.get( contents, 'SMTP_HOST' )

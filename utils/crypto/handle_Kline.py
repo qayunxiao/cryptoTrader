@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 # @Time    : 2023/2/25 15:10
 # @Author  : alvin
 # @File    : handle_numpy.py
@@ -318,4 +318,4 @@ if __name__ == '__main__':
     # dealdatatest.testAvg()
     # dealdatatest.testPtp()
     # dealdatatest.testMaxAndMin()
-    dealdatatest.testMedian()
+    dealdatatest.testBi()

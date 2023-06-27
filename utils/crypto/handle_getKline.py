@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import csv
 import datetime
 import os
@@ -30,7 +31,7 @@ def get_data(symbol = 'BTC/USDT'):
     binance_exchange = ccxt.binance({
         'timeout': 15000,
         'enableRateLimit': True,
-        'proxies': {'https': "http://127.0.0.1:10082", 'http': "http://127.0.0.1:10081"}
+        'proxies': {'https': "http://127.0.0.1:1082", 'http': "http://127.0.0.1:1081"}
     })
     # symbol = 'BTC/USDT'
     #print("symbol",symbol)

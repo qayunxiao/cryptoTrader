@@ -56,6 +56,6 @@ def send_mail(receicers,attachmentFile,messagetilte="_crypto分析数据"):
 
 
 if __name__ == '__main__':
-    receicers=["cracker-lin@qq.com","alvinqa@foxmail.com","qawanghailin@gmail.com"]
-    attachmentFile=r'D:\Sourcetree\alvinsss\AirDrop\log\crypto_20230322_1021.log'
+    receicers=[ "qawanghailin@gmail.com"]
+    attachmentFile=r'D:\Sourcetree\yunxiao\cryptoTrader\log\crypto_20230627_1304.log'
     send_mail = send_mail(receicers,attachmentFile)
