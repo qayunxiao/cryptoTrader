@@ -31,6 +31,7 @@ log_path = os.path.join(project_path,r'log')
 def get_newlogfile():
     lists = os.listdir(log_path)                                    #列出目录的下所有文件和文件夹保存到lists
     # print(list)
+    print("log_path",log_path)
     lists.sort(key=lambda fn:os.path.getmtime(log_path + "\\" + fn))#按时间排序
     file_new = os.path.join(log_path,lists[-1])                     #获取最新的文件保存到file_new
     print(file_new)

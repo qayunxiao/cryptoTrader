@@ -23,6 +23,9 @@ from utils.operationConfig import OperationConfig
 class get_api_ahr999():
 
     def __init__(self):
+        self.proxies = {
+            "http": "http://127.0.0.1:1082"
+        }
         self.confdata = OperationConfig().get_apiinfo()
         self.ahr999_count={}
         self.ahr999_datadict={}
@@ -48,9 +51,9 @@ class get_api_ahr999():
     #返回get到的data字段
     def get_ahr(self):
         # print("url:",self.url)
-        res = requests.get(url=self.url)
+        res = requests.get(url=self.url,proxies=self.proxies)
         data_ahr=res.json()['data']
-        # print(data_ahr)
+        print(data_ahr)
         return data_ahr
 
     def write_ahr_data(self):
@@ -179,8 +182,8 @@ class get_api_ahr999():
 if __name__ == '__main__':
     print("__name__",__name__)
     resapi = get_api_ahr999()
-    # resapi.get_ahr()
-    resapi.read_ahr_file()
+    resapi.get_ahr()
+    # resapi.read_ahr_file()
     # resapi.deal_ahr_data()
     # resapi.deal_ahr_data(halve=3)
     # resapi.deal_ahr_data(halve=2)

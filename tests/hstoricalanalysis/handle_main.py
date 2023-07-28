@@ -6,7 +6,7 @@
 import os
 import sys
 
-from handle_ddmsg import  send_ding_msg_byfilepath
+from handle_ddmsg import send_ding_msg_byfilepath, send_ding_msgs
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(BASE_DIR)
@@ -58,8 +58,14 @@ if __name__ == '__main__':
                                                        (ahr_value['price']), (ahr_value['niheprice']),
                                                        (ahr_value['200']))
     # 综合抄底判断
-    if fear_value[0] < 30 and ahr_value['ahr999'] < 0.5:
-        log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 抄底合适".format(fear_value[0], ahr_value['ahr999']))
+    if fear_value[0] < 40 or ahr_value['ahr999'] < 0.5:
+        log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], ahr_value['ahr999']))
+        send_ding_msgs("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], ahr_value['ahr999']))
+
+    # 逃顶判断
+    if fear_value[0] > 90 or ahr_value['ahr999'] > 1.2:
+        log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], ahr_value['ahr999']))
+        send_ding_msgs("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], ahr_value['ahr999']))
 
     try:
         symbol_list=['BTC','ETH']
@@ -89,4 +95,4 @@ if __name__ == '__main__':
         receicers = ["qawanghailin@gmail.com","kaysen820@gmail.com"]
         attachmentFile = get_newlogfile()
         send_mail(receicers, attachmentFile)
-        send_ding_msg_byfilepath(dd_msg_info)
+        send_ding_msg_byfilepath(attachmentFile)
