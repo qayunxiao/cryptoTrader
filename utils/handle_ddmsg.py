@@ -72,7 +72,7 @@ def send_ding_msg_byfilepath(filepath):
 
 
 def send_ding_msgs(msg):
-    print("config_path", config_path)
+    # print("config_path", config_path)
     config = configparser.ConfigParser()
     config.read(config_path, encoding="utf-8-sig")
     send_secret = config.get("dingding", 'SECRET')
@@ -81,8 +81,8 @@ def send_ding_msgs(msg):
     headers = {'Content-Type': 'application/json', "Charset": "UTF-8"}
 # 这里替换为复制的完整 webhook 地址
     prefix = "https://oapi.dingtalk.com/robot/send?access_token={}".format(send_access_token)
-    print("send_secret", send_secret)
-    print("prefix", prefix)
+    # print("send_secret", send_secret)
+    # print("prefix", prefix)
 
     timestamp = str(round(time.time() * 1000))
 # 这里替换为自己复制过来的加签秘钥
@@ -113,8 +113,8 @@ def send_ding_msgs(msg):
 
 if __name__ == "__main__":
 
-    # 填写你的钉钉机器人secret和access_token
-    attachmentFile = get_newlogfile()
-    print("attachmentFile",attachmentFile)
-    # send_ding_msg_byfilepath(attachmentFile)
-    # send_ding_msgs("币圈一日 ，人间一年！")
+    # # 填写你的钉钉机器人secret和access_token
+    # attachmentFile = get_newlogfile()
+    # print("attachmentFile",attachmentFile)
+    # # send_ding_msg_byfilepath(attachmentFile)
+    send_ding_msgs("填写你的钉钉机器人secret和access_token")

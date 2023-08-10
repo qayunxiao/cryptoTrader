@@ -17,15 +17,15 @@ from utils.operationConfig import OperationConfig
 
 
 def send_mail(receicers,attachmentFile,messagetilte="_crypto分析数据"):
-    print(receicers,attachmentFile)
+    # print(receicers,attachmentFile)
     confdata = OperationConfig().get_sendmail_info()
-    print("confdata",confdata)
+    # print("confdata",confdata)
     mail_user=confdata['send_user']
     sender=confdata['send_from']
     mail_pass=confdata['login_pwd']
     mail_host=confdata['host']
     #授权码
-    print(mail_host,mail_user,sender,mail_pass)
+    # print(mail_host,mail_user,sender,mail_pass)
     #内容
     message = MIMEMultipart()
     #hmtl 文字红色
@@ -43,14 +43,14 @@ def send_mail(receicers,attachmentFile,messagetilte="_crypto分析数据"):
     #标题
     with open(attachmentFile,'r',encoding='utf-8') as f:
         contents=f.read()
-        print("contents",contents)
+        # print("contents",contents)
     message.attach(MIMEText(contents,'plain','utf-8'))
     try:
         smtpobj = smtplib.SMTP()
         smtpobj.connect(mail_host,25)
         smtpobj.login(mail_user,mail_pass)
         smtpobj.sendmail(sender,receicers,message.as_string())
-        print("email send over!")
+        # print("email send over!")
     except smtplib.SMTPException as e:
         print("error:{}".format(e))
 

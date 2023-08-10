@@ -6,6 +6,7 @@
 import os
 import sys
 
+from api_list.handle_ahr999new import get_api_ahr999new
 from handle_ddmsg import send_ding_msg_byfilepath, send_ding_msgs
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -19,11 +20,12 @@ from utils.handle_log import log
 from utils.handle_path import get_newlogfile
 from api_list.handle_ahr999 import get_api_ahr999
 from api_list.handle_fear import get_api_fear
+
 time.sleep(2)
 
 if __name__ == '__main__':
 
-    dd_msg_info=[]
+    dd_msg_info = []
     # print("获取恐慌数据并离线计算")
     resapi_fear = get_api_fear()
     resapi_fear.write_fear_data()
@@ -34,41 +36,48 @@ if __name__ == '__main__':
     fear_value = resapi_fear.get_current_fear_value()
     # print("今日恐慌指数:",fear_value)
     print("获取ahr999指数书籍并离线计算")
-    resapi_ahr = get_api_ahr999()
-    resapi_ahr.write_ahr_data()
-    resapi_ahr.deal_ahr_data()
-    resapi_ahr.deal_ahr_data(halve=3)
-    resapi_ahr.deal_ahr_data(halve=2)
-    ahr_value = resapi_ahr.get_ahr999_data()
-    ahr_count = resapi_ahr.get_ahr999_count()
+    res_ahr = get_api_ahr999new()
+    resapi_ahr=res_ahr.get_ahr_table()
+    # print(resapi_ahr['data'])
+    resapi_ahr_data_today ={
+        "ahr999":resapi_ahr['data'][0].get("ahr999",0),
+        "ahrChange": resapi_ahr['data'][0].get("ahrChange", 0),
+        "avg": resapi_ahr['data'][0].get("avg", 0),
+        "avgChange": resapi_ahr['data'][0].get("avgChange", 0),
+        "value": resapi_ahr['data'][0].get("value", 0),
+        "valueChange": resapi_ahr['data'][0].get("valueChange", 0),
+        "date": resapi_ahr['data'][0].get("date", 0)
+    }
+    resapi_ahr_data_yesterday ={
+        "ahr999":resapi_ahr['data'][1].get("ahr999",0),
+        "ahrChange": resapi_ahr['data'][1].get("ahrChange", 0),
+        "avg": resapi_ahr['data'][1].get("avg", 0),
+        "avgChange": resapi_ahr['data'][1].get("avgChange", 0),
+        "value": resapi_ahr['data'][1].get("value", 0),
+        "valueChange": resapi_ahr['data'][1].get("valueChange", 0),
+        "date": resapi_ahr['data'][1].get("date", 0)
+    }
 
-    print("恐慌和ahr指标汇总:今日:{},恐慌指数:{},昨日恐慌指数:{},今日ahr999值:{},昨日ahr999值:{},定投线1.2,"
-          "抄底线0.45,今日价格:{},拟合价格:{},200日定投成本:{}".format((time.strftime('%Y年%m月%d日')), (fear_value[0]), (fear_value[1]),
-                                                       (ahr_value['ahr999']), (ahr_value['yesterdayahr999']),
-                                                       (ahr_value['price']), (ahr_value['niheprice']),
-                                                       (ahr_value['200'])))
-    log.warning("恐慌和ahr指标汇总:今日:{},恐慌指数:{},昨日恐慌指数:{},今日ahr999值:{},昨日ahr999值:{},定投线1.2,"
-                "抄底线0.45,今日价格:{},拟合价格:{},200日定投成本:{}".format((time.strftime('%Y年%m月%d日')), (fear_value[0]),
-                                                             (fear_value[1]), (ahr_value['ahr999']),
-                                                             (ahr_value['yesterdayahr999']),
-                                                             (ahr_value['price']), (ahr_value['niheprice']),
-                                                             (ahr_value['200'])))
-    msg_01="恐慌和ahr指标汇总:今日:{},恐慌指数:{},昨日恐慌指数:{},今日ahr999值:{},昨日ahr999值:{},定投线1.2,抄底线0.45,今日价格:{},拟合价格:{},200日定投成本:{}".format((time.strftime('%Y年%m月%d日')), (fear_value[0]), (fear_value[1]),
-                                                       (ahr_value['ahr999']), (ahr_value['yesterdayahr999']),
-                                                       (ahr_value['price']), (ahr_value['niheprice']),
-                                                       (ahr_value['200']))
+    msg_01="恐慌和ahr指标汇总:今日:{},恐慌指数:{},昨日恐慌指数:{},今日ahr999值:{},昨日ahr999值:{},定投线1.2,""抄底线0.45,今日价格:{} ,200日定投成本:{}".format((time.strftime('%Y年%m月%d日')), (fear_value[0]), (fear_value[1]),
+                                                       (resapi_ahr_data_today["ahr999"]), (resapi_ahr_data_yesterday["ahr999"]),
+                                                       (resapi_ahr_data_today["value"]), (resapi_ahr_data_today['avg']))
+    # print(msg_01)
+    log.warning(msg_01)
+
     # 综合抄底判断
-    if fear_value[0] < 40 or ahr_value['ahr999'] < 0.5:
-        log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], ahr_value['ahr999']))
-        send_ding_msgs("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], ahr_value['ahr999']))
+    if fear_value[0] < 40 or resapi_ahr_data_today["ahr999"] < 0.5:
+    # if fear_value[0] < 40:
+        log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        send_ding_msgs("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     # 逃顶判断
-    if fear_value[0] > 90 or ahr_value['ahr999'] > 1.2:
-        log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], ahr_value['ahr999']))
-        send_ding_msgs("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], ahr_value['ahr999']))
+    if fear_value[0] > 90 or resapi_ahr_data_today["ahr999"]  > 1.2:
+    # if fear_value[0] > 90:
+        log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        send_ding_msgs("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     try:
-        symbol_list=['BTC','ETH']
+        symbol_list = ['BTC', 'ETH']
         # symbol_list = ['BTC', 'ETH', 'DOT', 'LTC', 'FIL']
         print("{}:全量币安交易所行情token处理开始.....".format((time.strftime('%Y年%m月%d日'))))
         for token in symbol_list:
@@ -92,7 +101,7 @@ if __name__ == '__main__':
         raise e
 
     finally:
-        receicers = ["qawanghailin@gmail.com","kaysen820@gmail.com"]
+        receicers = ["qawanghailin@gmail.com", "kaysen820@gmail.com"]
         attachmentFile = get_newlogfile()
         send_mail(receicers, attachmentFile)
-        send_ding_msg_byfilepath(attachmentFile)
+        send_ding_msgs(msg_01)

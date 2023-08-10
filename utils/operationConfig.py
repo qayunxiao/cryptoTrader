@@ -33,13 +33,16 @@ class OperationConfig( object ):
     def get_apiinfo(self, contents="url"):
         envdic = {}
         config = configparser.ConfigParser()
-        config.read( self.testdata.data_dir( 'config', 'config.ini' ),
-                     encoding="utf-8-sig" )
+        config.read( self.testdata.data_dir( 'config', 'config.ini' ),encoding="utf-8-sig" )
         api_fear = config.get( contents, "API_FEAR" )
         api_arh999 = config.get( contents, "API_ARH999" )
+        api_arh999new = config.get( contents, "API_ARH999NEW" )
+        api_arh999new_key = config.get( contents, "API_ARH999NEW_KEY" )
 
         envdic['api_fear'] = api_fear
         envdic['api_arh999'] = api_arh999
+        envdic['api_arh999new'] = api_arh999new
+        envdic['api_arh999new_key'] = api_arh999new_key
         return envdic
 
     def get_testenv_mysql(self, contents="mysql"):

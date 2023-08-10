@@ -32,15 +32,15 @@ class get_api_ahr999():
         self.filepath= os.path.join(data_ccxt_path,"AHR.csv")
         self.url = self.confdata['api_arh999']
         self.headers = {
-            # "authority":"dncapi.soulbab.com",
-            # "method":"GET",
-            # "path":"/api/v2/index/arh999?code=bitcoin&webp=1",
-            # "scheme":"https",
-            # "accept":'application/json, text/plain, */*',
-            # "accept-encoding":"gzip, deflate, br",
-            # "accept-language":"zh-CN,zh;q=0.9",
-            # "origin":"https://www.feixiaohaozh.info",
-            # "referer":"https://www.feixiaohaozh.info/",
+            "authority":"dncapi.soulbab.com",
+            "method":"GET",
+            "path":"/api/v2/index/arh999?code=bitcoin&webp=1",
+            "scheme":"https",
+            "accept":'application/json, text/plain, */*',
+            "accept-encoding":"gzip, deflate, br",
+            "accept-language":"zh-CN,zh;q=0.9",
+            "origin":"https://www.feixiaohaozh.info",
+            "referer":"https://www.feixiaohaozh.info/",
             "sec-ch-ua":'"Google Chrome";v="87", " Not;A Brand";v="99", "Chromium";v="87"',
             "sec-ch-ua-mobile":"?0",
             "sec-fetch-dest":"empty",
@@ -52,6 +52,7 @@ class get_api_ahr999():
     def get_ahr(self):
         # print("url:",self.url)
         res = requests.get(url=self.url,proxies=self.proxies)
+        print("get_ahr-->",res.status_code ,res.text)
         data_ahr=res.json()['data']
         print(data_ahr)
         return data_ahr
