@@ -35,7 +35,7 @@ if __name__ == '__main__':
     resapi_fear.deal_fear_data_all(skipdays=startDay)
     fear_value = resapi_fear.get_current_fear_value()
     # print("今日恐慌指数:",fear_value)
-    print("获取ahr999指数书籍并离线计算")
+    # print("获取ahr999指数數據并离线计算")
     res_ahr = get_api_ahr999new()
     resapi_ahr=res_ahr.get_ahr_table()
     # print(resapi_ahr['data'])
@@ -58,7 +58,7 @@ if __name__ == '__main__':
         "date": resapi_ahr['data'][1].get("date", 0)
     }
 
-    msg_01="恐慌和ahr指标汇总:今日:{},恐慌指数:{},昨日恐慌指数:{},今日ahr999值:{},昨日ahr999值:{},定投线1.2,""抄底线0.45,今日价格:{} ,200日定投成本:{}".format((time.strftime('%Y年%m月%d日')), (fear_value[0]), (fear_value[1]),
+    msg_01="1:恐慌和ahr指标汇总:今日:{},恐慌指数:{},昨日恐慌指数:{},今日ahr999值:{},昨日ahr999值:{},定投线1.2,""抄底线0.45,今日价格:{} ,200日定投成本:{}".format((time.strftime('%Y年%m月%d日')), (fear_value[0]), (fear_value[1]),
                                                        (resapi_ahr_data_today["ahr999"]), (resapi_ahr_data_yesterday["ahr999"]),
                                                        (resapi_ahr_data_today["value"]), (resapi_ahr_data_today['avg']))
     # print(msg_01)
@@ -68,13 +68,13 @@ if __name__ == '__main__':
     if fear_value[0] < 40 or resapi_ahr_data_today["ahr999"] < 0.5:
     # if fear_value[0] < 40:
         log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
-        send_ding_msgs("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        send_ding_msgs("综合抄底判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     # 逃顶判断
     if fear_value[0] > 90 or resapi_ahr_data_today["ahr999"]  > 1.2:
     # if fear_value[0] > 90:
         log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
-        send_ding_msgs("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        send_ding_msgs("综合逃顶判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     try:
         symbol_list = ['BTC', 'ETH']
@@ -104,4 +104,5 @@ if __name__ == '__main__':
         receicers = ["qawanghailin@gmail.com", "kaysen820@gmail.com"]
         attachmentFile = get_newlogfile()
         send_mail(receicers, attachmentFile)
-        send_ding_msgs(msg_01)
+        send_ding_msg_byfilepath(attachmentFile)
+        # send_ding_msgs(msg_01)
