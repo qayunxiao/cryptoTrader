@@ -37,8 +37,15 @@ class get_api_ahr999new():
         # print("self.key is :{}".format(self.key))
         self.headers = {
             # "authorization": self.key,
-            "method": "GET",
-            "content - type": "application / json",
+            "authority":"coinsoto.com",
+            "method":"GET",
+            "path": "/indicatorapi/getAhr999Table",
+            "scheme": "https",
+            # "accept:": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "accept-encoding":"gzip, deflate, br",
+            # "accept-language": "zh-CN,zh;q=0.9",
+            "content - type":"application/json",
+            "cookie":"i18n_redirected=zh; _ga=GA1.1.913694702.1691644431; kindTips=true; _ga_BDEPVNN1SX=GS1.1.1692844410.3.0.1692844419.0.0.0",
             "user-agent": 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
         }
 
@@ -48,7 +55,6 @@ class get_api_ahr999new():
         res = requests.get(url=self.url, proxies=self.proxies, headers=self.headers)
         if 200 == res.status_code:
             return res.json()
-
 
 
 if __name__ == '__main__':

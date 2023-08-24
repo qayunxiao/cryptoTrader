@@ -35,7 +35,7 @@ class get_api_fear():
             "accept-encoding":"zh-CN,zh;q=0.9",
             "content-length":"11",
             "content-type": "application/json",
-            "cookie":'_ga=GA1.2.1952982792.1679038387; _gid=GA1.2.757896586.1679038387; dancer.session=4bNxNCrAZnWDLXEdntncLC8YtCa3d27ces6M17NEVl8~1710574873~SDKRk0AopDZ7sbAPGs99vA~8AUmranQnHCrBIfHuMJJu94d1Qm-iQGUPhudSptk9tg~2',
+            "cookie":'i18n_redirected=zh; _ga=GA1.1.913694702.1691644431; kindTips=true; _ga_BDEPVNN1SX=GS1.1.1692844410.3.1.1692844526.0.0.0',
             "origin":"https://alternative.me",
             "referer": self.url,
             "sec-ch-ua":"?0",

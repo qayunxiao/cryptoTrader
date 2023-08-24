@@ -57,18 +57,25 @@ if __name__ == '__main__':
         "valueChange": resapi_ahr['data'][1].get("valueChange", 0),
         "date": resapi_ahr['data'][1].get("date", 0)
     }
+    import time
+    tmp=resapi_ahr_data_today["date"]
+    # print("tmp is :{}".format(tmp))
+    today_date=time.localtime(tmp/1000)
+    date_day=time.strftime("%Y-%m-%d %H:%M:%S", today_date)
+    # print("resapi_ahr_data_today is :{}".format(resapi_ahr_data_today["date"]))
+    # print("resapi_ahr_data_yesterday is :{}".format(resapi_ahr_data_yesterday["date"]))
 
-    msg_01="1:恐慌和ahr指标汇总:今日:{},恐慌指数:{},昨日恐慌指数:{},今日ahr999值:{},昨日ahr999值:{},定投线1.2,""抄底线0.45,今日价格:{} ,200日定投成本:{}".format((time.strftime('%Y年%m月%d日')), (fear_value[0]), (fear_value[1]),
-                                                       (resapi_ahr_data_today["ahr999"]), (resapi_ahr_data_yesterday["ahr999"]),
-                                                       (resapi_ahr_data_today["value"]), (resapi_ahr_data_today['avg']))
+    msg_01="恐慌和ahr指标汇总:日期：{},恐慌指数:{} ,昨天恐慌指数:{}, ahr999值:{},昨天ahr999值:{},定投线1.2,""抄底线0.45 ,200日定投成本:{}".format(
+        date_day, (fear_value[0]),  fear_value[1],(resapi_ahr_data_today["ahr999"]),(resapi_ahr_data_yesterday["ahr999"]),  (resapi_ahr_data_today['avg']))
     # print(msg_01)
     log.warning(msg_01)
+    # print("date_day is :{}".format(date_day))
 
-    # 综合抄底判断
+     # 综合抄底判断
     if fear_value[0] < 40 or resapi_ahr_data_today["ahr999"] < 0.5:
     # if fear_value[0] < 40:
         log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
-        send_ding_msgs("综合抄底判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        send_ding_msgs("Tips综合抄底判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     # 逃顶判断
     if fear_value[0] > 90 or resapi_ahr_data_today["ahr999"]  > 1.2:
