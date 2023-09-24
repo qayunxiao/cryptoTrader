@@ -7,7 +7,7 @@ import os
 import sys
 
 from api_list.handle_ahr999new import get_api_ahr999new
-from handle_ddmsg import send_ding_msg_byfilepath, send_ding_msgs
+from utils.handle_ddmsg import send_ding_msg_byfilepath, send_ding_msgs
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(BASE_DIR)
@@ -74,8 +74,8 @@ if __name__ == '__main__':
      # 综合抄底判断
     if fear_value[0] < 40 or resapi_ahr_data_today["ahr999"] < 0.5:
     # if fear_value[0] < 40:
-        log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
-        send_ding_msgs("Tips综合抄底判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        log.error("Tips综合抄底判断:当前恐慌指数:43.0,当前ahr999值:0.4462 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        send_ding_msgs("Tips综合抄底判断:当前恐慌指数:43.0,当前ahr999值:0.4462 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     # 逃顶判断
     if fear_value[0] > 90 or resapi_ahr_data_today["ahr999"]  > 1.2:
