@@ -21,8 +21,6 @@ from utils.handle_path import get_newlogfile
 from api_list.handle_ahr999 import get_api_ahr999
 from api_list.handle_fear import get_api_fear
 
-time.sleep(2)
-
 if __name__ == '__main__':
 
     dd_msg_info = []
@@ -65,7 +63,7 @@ if __name__ == '__main__':
     # print("resapi_ahr_data_today is :{}".format(resapi_ahr_data_today["date"]))
     # print("resapi_ahr_data_yesterday is :{}".format(resapi_ahr_data_yesterday["date"]))
 
-    msg_01="恐慌和ahr指标汇总:日期：{},恐慌指数:{} ,昨天恐慌指数:{}, ahr999值:{},昨天ahr999值:{},定投线1.2,""抄底线0.45 ,200日定投成本:{}".format(
+    msg_01="4:恐慌和ahr指标汇总:日期：{},恐慌指数:{} ,昨天恐慌指数:{}, ahr999值:{},昨天ahr999值:{},定投线1.2,""抄底线0.45 ,200日定投成本:{}".format(
         date_day, (fear_value[0]),  fear_value[1],(resapi_ahr_data_today["ahr999"]),(resapi_ahr_data_yesterday["ahr999"]),  (resapi_ahr_data_today['avg']))
     # print(msg_01)
     log.warning(msg_01)
@@ -74,26 +72,27 @@ if __name__ == '__main__':
      # 综合抄底判断
     if fear_value[0] < 40 or resapi_ahr_data_today["ahr999"] < 0.5:
     # if fear_value[0] < 40:
-        log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
-        send_ding_msgs("Tips综合抄底判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        send_ding_msgs("Tips综合抄底判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     # 逃顶判断
-    if fear_value[0] > 90 or resapi_ahr_data_today["ahr999"]  > 1.2:
-    # if fear_value[0] > 90:
+    if fear_value[0] > 85 or resapi_ahr_data_today["ahr999"]  > 1.2:
+    # if fear_value[0] > 85:
         log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
         send_ding_msgs("综合逃顶判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     try:
-        symbol_list = ['BTC', 'ETH']
-        # symbol_list = ['BTC', 'ETH', 'DOT', 'LTC', 'FIL']
+        symbol_list = ['BTC', 'ETH', 'DOT','LINK']
+        # symbol_list = ['TRB', 'DASH', 'OP']
+        # symbol_list = ['LINK']
         print("{}:全量币安交易所行情token处理开始.....".format((time.strftime('%Y年%m月%d日'))))
         for token in symbol_list:
             time.sleep(280)  # 控制频率
             symbol = token + '/USDT'
-            print("{}:开始下载K线数据{} ...".format(time.strftime('%Y年%m月%d日'), symbol))
+            # print("{}:开始下载K线数据{} ...".format(time.strftime('%Y年%m月%d日'), symbol))
             get_data(symbol)
-            print("{}:下载K线数据{}完成".format(time.strftime('%Y年%m月%d日'), symbol))
-            print("{}:开始计算离线数据{} ...".format(time.strftime('%Y年%m月%d日'), symbol))
+            # print("{}:下载K线数据{}完成".format(time.strftime('%Y年%m月%d日'), symbol))
+            # print("{}:开始计算离线数据{} ...".format(time.strftime('%Y年%m月%d日'), symbol))
             filename = symbol.split('/')[0] + '.csv'
             # print("get_data filename:",filename)
             dealdatatest = dealdata(filename)
@@ -101,15 +100,18 @@ if __name__ == '__main__':
             dealdatatest.testPtp()  # 极差 自高价的价差
             dealdatatest.testMaxAndMin()  # 跌幅
             dealdatatest.getvoldata()
-            print("{}:计算离线数据{}完成 ...".format(time.strftime('%Y年%m月%d日'), symbol))
+            # print("{}:计算离线数据{}完成 ...".format(time.strftime('%Y年%m月%d日'), symbol))
         print("{}:全量token处理完成".format((time.strftime('%Y年%m月%d日'))))
 
     except Exception as e:
         raise e
 
     finally:
-        receicers = ["qawanghailin@gmail.com", "kaysen820@gmail.com"]
+        # pass
+        receicers = ["qawanghailin@gmail.com"]
         attachmentFile = get_newlogfile()
-        send_mail(receicers, attachmentFile)
+        # send_mail(receicers, attachmentFile)
         send_ding_msg_byfilepath(attachmentFile)
-        # send_ding_msgs(msg_01)
+        # log.warning("attachmentFile is :{}".format(attachmentFile))
+        time.sleep(1)
+        send_ding_msgs(msg_01)

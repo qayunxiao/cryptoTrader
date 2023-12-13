@@ -81,9 +81,9 @@ def get_data(symbol = 'BTC/USDT'):
     # 市场行情
     #print ('买价：{:.2f}, 卖价：{:.2f}, 价差：{:.2f}'.format(bid, ask, spread))
     # K线数据数据获取
-    #     binance_exchange.fetch_ohlcv(symbol, timeframe='1d')
-    #     if binance_exchange.has['fetchOHLCV']:
-    #         #print(binance_exchange.fetch_ohlcv(symbol, timeframe='1d'))
+    binance_exchange.fetch_ohlcv(symbol, timeframe='1d')
+    if binance_exchange.has['fetchOHLCV']:
+        print(binance_exchange.fetch_ohlcv(symbol, timeframe='1d'))
 
     #1636473600000  1607529600000
     if ( ((symbol.split('/')[0]) == 'BTC') or ((symbol.split('/')[0]) == 'ETH') ) :
@@ -98,6 +98,8 @@ def get_data(symbol = 'BTC/USDT'):
         kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1672502400000)
     elif ( ((symbol.split('/')[0]) == 'SNX')):#
         kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1593964800000)
+    elif ( ((symbol.split('/')[0]) == 'LINK')):#
+        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1680019200000)
     else:
         kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1672502400000)
 
@@ -153,6 +155,6 @@ def concat_csv():
 
 
 if __name__ == '__main__':
-    symbol = 'FIL/USDT'
+    symbol = 'LINK/USDT'
     get_data(symbol)
     # concat_csv()

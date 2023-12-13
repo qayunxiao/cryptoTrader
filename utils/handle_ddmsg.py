@@ -44,19 +44,16 @@ def send_ding_msg_byfilepath(filepath):
 
     with open(filepath,"r",encoding="utf-8") as file:
         msg_tmp = file.readlines()
-    # print("msg_tmp",len(msg_tmp))
-    # print("msg_tmp[2]",msg_tmp[2][56:])
-    # print("msg_tmp[5]",msg_tmp[5][54:])
-    # print("msg_tmp[12]",msg_tmp[12][55:])
-    # print("msg_tmp[18]",msg_tmp[18][53:])
-    # print("msg_tmp[24]",msg_tmp[24][53:])
+        # print("msg_tmp",len(msg_tmp))
+        # print("msg_tmp[2]",msg_tmp[17][54:])
+
     try:
-        msg = "1:" + msg_tmp[6][55:] + "2:大饼" + msg_tmp[8][53:]+msg_tmp[11][54:]+msg_tmp[12][53:]+ "3:以太" + msg_tmp[14][54:]+msg_tmp[17][53:]+msg_tmp[18][53:]
+        msg = "1:" + msg_tmp[6][55:] + "2:大饼" + msg_tmp[8][53:]+msg_tmp[11][54:]+msg_tmp[12][53:]+ "3:以太" + msg_tmp[14][54:]+msg_tmp[17][54:]+msg_tmp[18][53:]
     # 钉钉消息格式，其中 msg 就是我们要发送的具体内容
     except SyntaxError as e:
         print("except:",e)
         print("可能文件数据不够")
-        msg="这世界有太多的烟火 这世界有太多的啰嗦 全部都一笑而过,我就是我，颜色不一样的火--by bot"
+        msg="这世界有太多的烟火 这世界有太多的啰嗦 全部都一笑而过,我就是我，颜色不一样的火--by alvin bot"
     finally:
         data = {
             "at": {
@@ -114,7 +111,7 @@ def send_ding_msgs(msg):
 if __name__ == "__main__":
 
     # # 填写你的钉钉机器人secret和access_token
-    attachmentFile = get_newlogfile()
+    attachmentFile = "D:\Sourcetree\yunxiao\cryptoTrader\log\crypto_20231213_1105.log"
     print("attachmentFile",attachmentFile)
     send_ding_msg_byfilepath(attachmentFile)
     # send_ding_msgs("填写你的钉钉机器人secret和access_token")
