@@ -5,7 +5,7 @@
 # @Software: PyCharm
 import os
 
-import  numpy as np
+import numpy as np
 import matplotlib.pyplot as plt
 # import matplotlib.finance as mpf
 from utils.handle_path import data_investment_path
