@@ -25,4 +25,4 @@ def run_get_history_data():
 
 if __name__ == '__main__':
     # run_get_current_price()
-    run_get_history_data()
+    run_get_current_price()

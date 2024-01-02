@@ -10,6 +10,7 @@ import time
 
 # Python 3.5.3+ 中支持使用 asyncio 和 async/await 的并发异步模式
 # import ccxt.async_support as ccxt
+from handle_ddmsg import send_ding_msgs
 from utils.handle_path import project_path,data_ccxt_path
 
 
@@ -264,6 +265,7 @@ def get_data_price(symbol_list,price_date):
             kline_df['date'] = pd.to_datetime(kline_df['time'], unit='ms')
             price_list.append([symbol,kline_data[-1][-2]])
     print("日期是:{},价格是:{}".format(new_price_date,price_list))
+    send_ding_msgs("日期是:{},价格是:{}".format(new_price_date,price_list))
 
 
 # if __name__ == '__main__':
