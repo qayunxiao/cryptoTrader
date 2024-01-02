@@ -119,8 +119,8 @@ def get_data(symbol = 'BTC/USDT'):
     #to_datetime  将时间戳毫秒转日期 -unit='ms'
     kline_df['date'] = pd.to_datetime(kline_df['time'], unit='ms')
     # kline_df = pd.DataFrame(kline_data)
-    print("kline_df_tail",kline_df.tail(2))
-    print("kline_df_head",kline_df.head(2))
+    # print("kline_df_tail",kline_df.tail(2))
+    # print("kline_df_head",kline_df.head(2))
 
 
 #存储数据 判断tmp文件是否存在，如果存在就删除
@@ -162,14 +162,14 @@ def concat_csv():
     df = pd.concat([df2,df1])
     f_my=os.path.join(data_ccxt_path,'BTC2.csv')
     df.to_csv(f_my,encoding='utf-8')
-    print("concat_csv {} over ".format(f_my))
-    print("kline_df_head",df.head(2))
+    # print("concat_csv {} over ".format(f_my))
+    # print("kline_df_head",df.head(2))
 
 def get_data_hisroty(symbol,start_date):
     history_ccxt_tmppath = os.path.join(project_path,'data','ccxt_binance_historydata')
     history_filename = symbol.split('/')[0]+'_history.csv'
     history_data_path = os.path.join(history_ccxt_tmppath,history_filename)
-    print("history_data_path is :{}".format(history_data_path))
+    # print("history_data_path is :{}".format(history_data_path))
     delay =3 #seconds https://api.binance.com/api/v3/exchangeInfo
     if "Windows" == platform.system():
         binance_exchange = ccxt.binance({
@@ -202,8 +202,8 @@ def get_data_hisroty(symbol,start_date):
         print(binance_exchange.fetch_ohlcv(symbol, timeframe='1d'))
     since_date = date_to_timestamp(start_date)
     kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=int(since_date))
-    print("kline_data  TYPE is :{}".format((kline_data)))
-    print("kline_data  LAST is :{}".format( (kline_data[-1][-2])))
+    # print("kline_data  TYPE is :{}".format((kline_data)))
+    # print("kline_data  LAST is :{}".format( (kline_data[-1][-2])))
 
     #  处理数据格式 时间戳毫秒改日期格式
     kline_df = pd.DataFrame(kline_data,columns = ["time","open","high","low","close","vol"] )
@@ -269,7 +269,7 @@ def get_data_price(symbol_list,price_date):
         if binance_exchange.has['fetchOHLCV']:
             # print("fetchOHLCV is :{}".format(binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d')))
             kline_data = binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d',since=int(price_date))
-            print("symbol is :{} ,close price is :{}".format(symbol,(kline_data[-1][-2])))
+            # print("symbol is :{} ,close price is :{}".format(symbol,(kline_data[-1][-2])))
             time.sleep(delay)
             #  处理数据格式 时间戳毫秒改日期格式
             kline_df = pd.DataFrame(kline_data,columns = ["time","open","high","low","close","vol"] )
