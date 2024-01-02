@@ -5,8 +5,16 @@
 # @Description:  func
 # -------------------------
 import datetime
+import os
+import sys
 
-from crypto.handle_getKline import get_data_price
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+utils = os.path.join(BASE_DIR,'utils')
+sys.path.append(BASE_DIR)
+sys.path.append(utils)
+print("utils is :{}".format(utils))
+
+from utils.crypto.handle_getKline import get_data_price
 from process_data.symbol_price_history import get_history_data
 
 
