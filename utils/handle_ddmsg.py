@@ -48,7 +48,7 @@ def send_ding_msg_byfilepath(filepath):
         # print("msg_tmp[2]",msg_tmp[17][54:])
 
     try:
-        msg = "1:" + msg_tmp[6][55:] + "2:大饼" + msg_tmp[8][53:]+msg_tmp[11][54:]+msg_tmp[12][53:]+ "3:以太" + msg_tmp[14][54:]+msg_tmp[17][54:]+msg_tmp[18][53:]
+        msg = "1:" + msg_tmp[6][64:] + "2:大饼" + msg_tmp[8][53:]+msg_tmp[11][54:]+msg_tmp[12][53:]+ "3:以太" + msg_tmp[14][54:]+msg_tmp[17][54:]+msg_tmp[18][53:]
     # 钉钉消息格式，其中 msg 就是我们要发送的具体内容
     except SyntaxError as e:
         print("except:",e)
@@ -111,7 +111,7 @@ def send_ding_msgs(msg):
 if __name__ == "__main__":
 
     # # 填写你的钉钉机器人secret和access_token
-    attachmentFile = "D:\Sourcetree\yunxiao\cryptoTrader\log\crypto_20231213_1105.log"
+    attachmentFile = "D:\Sourcetree\yunxiao\cryptoTrader\log\crypto_20240102_1440.log"
     print("attachmentFile",attachmentFile)
     send_ding_msg_byfilepath(attachmentFile)
     # send_ding_msgs("填写你的钉钉机器人secret和access_token")
