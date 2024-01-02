@@ -37,7 +37,11 @@ def get_data(symbol = 'BTC/USDT'):
             'proxies': {'https': "http://127.0.0.1:1082", 'http': "http://127.0.0.1:1081"}
         })
     else:
-        pass
+        binance_exchange = ccxt.binance({
+            'timeout': 15000,
+            'enableRateLimit': True,
+        })
+
     # symbol = 'BTC/USDT'
     #print("symbol",symbol)
     # 交易所数据结构
@@ -174,7 +178,10 @@ def get_data_hisroty(symbol,start_date):
             'proxies': {'https': "http://127.0.0.1:1082", 'http': "http://127.0.0.1:1081"}
         })
     else:
-        pass
+        binance_exchange = ccxt.binance({
+            'timeout': 15000,
+            'enableRateLimit': True,
+        })
 
     # 加载市场数据
     binance_markets = binance_exchange.load_markets()
@@ -226,6 +233,7 @@ def date_to_timestamp(date_str):
 
 def get_data_price(symbol_list,price_date):
     new_price_date = price_date
+    binance_exchange = None
     delay =3 #seconds https://api.binance.com/api/v3/exchangeInfo
     if "Windows" == platform.system():
         binance_exchange = ccxt.binance({
@@ -234,7 +242,11 @@ def get_data_price(symbol_list,price_date):
             'proxies': {'https': "http://127.0.0.1:1082", 'http': "http://127.0.0.1:1081"}
         })
     else:
-        pass
+        binance_exchange = ccxt.binance({
+            'timeout': 15000,
+            'enableRateLimit': True,
+        })
+
     # 加载市场数据
     binance_markets = binance_exchange.load_markets()
     price_list = []
