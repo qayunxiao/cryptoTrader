@@ -202,7 +202,7 @@ def get_data_hisroty(symbol,start_date):
         print(binance_exchange.fetch_ohlcv(symbol, timeframe='1d'))
     since_date = date_to_timestamp(start_date)
     kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=int(since_date))
-    # print("kline_data  TYPE is :{}".format((kline_data)))
+    print("kline_data    is :{}".format((kline_data)))
     # print("kline_data  LAST is :{}".format( (kline_data[-1][-2])))
 
     #  处理数据格式 时间戳毫秒改日期格式
@@ -213,7 +213,7 @@ def get_data_hisroty(symbol,start_date):
     # 存储数据 判断tmp文件是否存在，如果存在就删除
     if os.path.exists(history_data_path):  # 判断文件是否存在
         os.remove(history_data_path)
-        # print("tmp file exists is:",os.path.exists(tmp_file_path))
+        print("tmp file exists is:",os.path.exists(history_data_path))
         time.sleep(1)
         kline_df.to_csv(history_data_path, mode="a", index=False, header=True, encoding='utf-8')
     else:
@@ -232,6 +232,7 @@ def date_to_timestamp(date_str):
     return timestamp
 
 def get_data_price(symbol_list,price_date):
+    #获取单一bi种的历史数据
     new_price_date = price_date
     binance_exchange = None
     delay =3 #seconds https://api.binance.com/api/v3/exchangeInfo
@@ -277,8 +278,8 @@ def get_data_price(symbol_list,price_date):
             kline_df['date'] = pd.to_datetime(kline_df['time'], unit='ms')
             price_list.append([symbol,kline_data[-1][-2]])
     print("日期是:{},价格是:{}".format(new_price_date,price_list))
-    send_ding_msgs("日期是:{},价格是:{}".format(new_price_date,price_list))
+    send_ding_msgs("日期是:{},中长线持仓币种与价格是:{}".format(new_price_date,price_list))
 
 
-# if __name__ == '__main__':
-    # get_data_hisroty(symbol='ETH',start_date='2023-03-25')
+if __name__ == '__main__':
+    get_data_hisroty(symbol='FIL',start_date='2023-12-27')
