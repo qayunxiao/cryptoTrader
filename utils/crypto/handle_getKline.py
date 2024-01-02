@@ -2,6 +2,7 @@
 import csv
 import datetime
 import os
+import platform
 
 import ccxt
 import pandas as pd
@@ -28,11 +29,14 @@ def get_data(symbol = 'BTC/USDT'):
     # print("my_data_path",my_data_path)
 
     delay =3 #seconds https://api.binance.com/api/v3/exchangeInfo
-    binance_exchange = ccxt.binance({
-        'timeout': 15000,
-        'enableRateLimit': True,
-        'proxies': {'https': "http://127.0.0.1:1082", 'http': "http://127.0.0.1:1081"}
-    })
+    if "Windows" == platform.system():
+        binance_exchange = ccxt.binance({
+            'timeout': 15000,
+            'enableRateLimit': True,
+            'proxies': {'https': "http://127.0.0.1:1082", 'http': "http://127.0.0.1:1081"}
+        })
+    else:
+        pass
     # symbol = 'BTC/USDT'
     #print("symbol",symbol)
     # 交易所数据结构
@@ -87,21 +91,23 @@ def get_data(symbol = 'BTC/USDT'):
 
     #1636473600000  1607529600000
     if ( ((symbol.split('/')[0]) == 'BTC') or ((symbol.split('/')[0]) == 'ETH') ) :
-        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1672502400000)
+        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1704038400000)
     elif (  ((symbol.split('/')[0]) == 'DOT')): #20211104 历史数据含有
-        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1672502400000)
+        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1704038400000)
     elif (  ((symbol.split('/')[0]) == 'LTC')):#20210510 历史数据含有
-        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1672502400000)
+        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1704038400000)
     elif (  ((symbol.split('/')[0]) == 'FIL')):#20210401 历史数据含有
-        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1672502400000)
+        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1704038400000)
     elif (  ((symbol.split('/')[0]) == 'AGIX')): #之前高点数据单独处理
-        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1672502400000)
+        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1704038400000)
     elif ( ((symbol.split('/')[0]) == 'SNX')):#
-        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1593964800000)
+        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1704038400000)
     elif ( ((symbol.split('/')[0]) == 'LINK')):#
-        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1680019200000)
+        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1704038400000)
+    elif ( ((symbol.split('/')[0]) == 'SOL')):#
+        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1704038400000)
     else:
-        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1672502400000)
+        kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=1704038400000)
 
     #  处理数据格式 时间戳毫秒改日期格式
     kline_df = pd.DataFrame(kline_data,columns = ["time","open","high","low","close","vol"] )
@@ -125,9 +131,10 @@ def get_data(symbol = 'BTC/USDT'):
     #获取orderbook
     order_book= binance_exchange.fetch_order_book(symbol)
 #     #print("order_book",order_book['bids'])
-
+    print("tmp_file_path is :{}".format(tmp_file_path))
     df1 = pd.read_csv(tmp_file_path)
     # df1["来自文件"] = "tmp"
+    print("history_data_path is :{}".format(history_data_path))
     df2 = pd.read_csv(history_data_path)
     # df2["来自文件"] = "history"
     df = pd.concat([df2,df1])
@@ -153,8 +160,111 @@ def concat_csv():
     print("concat_csv {} over ".format(f_my))
     print("kline_df_head",df.head(2))
 
+def get_data_hisroty(symbol,start_date):
+    history_ccxt_tmppath = os.path.join(project_path,'data','ccxt_binance_historydata')
+    history_filename = symbol.split('/')[0]+'_history.csv'
+    history_data_path = os.path.join(history_ccxt_tmppath,history_filename)
+    print("history_data_path is :{}".format(history_data_path))
+    delay =3 #seconds https://api.binance.com/api/v3/exchangeInfo
+    if "Windows" == platform.system():
+        binance_exchange = ccxt.binance({
+            'timeout': 15000,
+            'enableRateLimit': True,
+            'proxies': {'https': "http://127.0.0.1:1082", 'http': "http://127.0.0.1:1081"}
+        })
+    else:
+        pass
 
-if __name__ == '__main__':
-    symbol = 'LINK/USDT'
-    get_data(symbol)
-    # concat_csv()
+    # 加载市场数据
+    binance_markets = binance_exchange.load_markets()
+    symbol = symbol +'/USDT'
+    binance_exchange.fetch_order_book(symbol)
+    orderbook = binance_exchange.fetch_order_book(symbol)
+    # 最高买价
+    bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
+    # 最低卖价
+    ask = orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None
+    # 价差
+    spread = (ask - bid) if (bid and ask) else None
+    # 市场行情
+    #print ('买价：{:.2f}, 卖价：{:.2f}, 价差：{:.2f}'.format(bid, ask, spread))
+    # K线数据数据获取1620576000  1664640000000
+    binance_exchange.fetch_ohlcv(symbol, timeframe='1d')
+    if binance_exchange.has['fetchOHLCV']:
+        print(binance_exchange.fetch_ohlcv(symbol, timeframe='1d'))
+    since_date = date_to_timestamp(start_date)
+    kline_data = binance_exchange.fetch_ohlcv(symbol, timeframe='1d',since=int(since_date))
+    print("kline_data  TYPE is :{}".format((kline_data)))
+    print("kline_data  LAST is :{}".format( (kline_data[-1][-2])))
+
+    #  处理数据格式 时间戳毫秒改日期格式
+    kline_df = pd.DataFrame(kline_data,columns = ["time","open","high","low","close","vol"] )
+    #to_datetime  将时间戳毫秒转日期 -unit='ms'
+    kline_df['date'] = pd.to_datetime(kline_df['time'], unit='ms')
+
+    # 存储数据 判断tmp文件是否存在，如果存在就删除
+    if os.path.exists(history_data_path):  # 判断文件是否存在
+        os.remove(history_data_path)
+        # print("tmp file exists is:",os.path.exists(tmp_file_path))
+        time.sleep(1)
+        kline_df.to_csv(history_data_path, mode="a", index=False, header=True, encoding='utf-8')
+    else:
+        # print("not exists")
+        kline_df.to_csv(history_data_path, mode="a", index=False, header=True, encoding='utf-8')
+
+def date_to_timestamp(date_str):
+    # import datetime
+    # date_str = "2022-01-01"
+    date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    timestamp = date_obj.timestamp()
+    timestamp = int(timestamp)
+    timestamp = str(timestamp)
+    timestamp = timestamp + '000'
+    print(" timestamp is:{}".format(timestamp))
+    return timestamp
+
+def get_data_price(symbol_list,price_date):
+    new_price_date = price_date
+    delay =3 #seconds https://api.binance.com/api/v3/exchangeInfo
+    if "Windows" == platform.system():
+        binance_exchange = ccxt.binance({
+            'timeout': 15000,
+            'enableRateLimit': True,
+            'proxies': {'https': "http://127.0.0.1:1082", 'http': "http://127.0.0.1:1081"}
+        })
+    else:
+        pass
+    # 加载市场数据
+    binance_markets = binance_exchange.load_markets()
+    price_list = []
+    price_date = date_to_timestamp(price_date)
+    for symbol in symbol_list:
+        symbol_usdt = symbol+'/USDT'
+        print("symbol_usdt is :{}".format(symbol_usdt))
+        binance_exchange.fetch_order_book(symbol_usdt)
+        orderbook = binance_exchange.fetch_order_book(symbol_usdt)
+        # 最高买价
+        bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
+        # 最低卖价
+        ask = orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None
+        # 价差
+        spread = (ask - bid) if (bid and ask) else None
+        # 市场行情
+        #print ('买价：{:.2f}, 卖价：{:.2f}, 价差：{:.2f}'.format(bid, ask, spread))
+        # K线数据数据获取1620576000  1664640000000
+        binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d')
+        if binance_exchange.has['fetchOHLCV']:
+            # print("fetchOHLCV is :{}".format(binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d')))
+            kline_data = binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d',since=int(price_date))
+            print("symbol is :{} ,close price is :{}".format(symbol,(kline_data[-1][-2])))
+            time.sleep(delay)
+            #  处理数据格式 时间戳毫秒改日期格式
+            kline_df = pd.DataFrame(kline_data,columns = ["time","open","high","low","close","vol"] )
+            #to_datetime  将时间戳毫秒转日期 -unit='ms'
+            kline_df['date'] = pd.to_datetime(kline_df['time'], unit='ms')
+            price_list.append([symbol,kline_data[-1][-2]])
+    print("日期是:{},价格是:{}".format(new_price_date,price_list))
+
+
+# if __name__ == '__main__':
+    # get_data_hisroty(symbol='ETH',start_date='2023-03-25')
