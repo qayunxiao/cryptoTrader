@@ -328,98 +328,102 @@ def get_data_Xprice(symbol_list,price_date,X):
         #print ('买价：{:.2f}, 卖价：{:.2f}, 价差：{:.2f}'.format(bid, ask, spread))
         # K线数据数据获取1620576000  1664640000000
         binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d')
+
         if binance_exchange.has['fetchOHLCV']:
             # print("fetchOHLCV is :{}".format(binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d')))
             kline_data = binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d',since=int(price_date))
-            # print("symbol is :{} ,close price is :{}".format(symbol,(kline_data[-1][-2])))
+            # print("symbol is :{} ,close price is :{}".format(symbol,(price_today)))
             time.sleep(delay)
             #  处理数据格式 时间戳毫秒改日期格式
             kline_df = pd.DataFrame(kline_data,columns = ["time","open","high","low","close","vol"] )
             #to_datetime  将时间戳毫秒转日期 -unit='ms'
             kline_df['date'] = pd.to_datetime(kline_df['time'], unit='ms')
+            price_today = kline_data[-1][-2]
             if 'BTC' == symbol:
-                if kline_data[-1][-2] > (21328 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (21328 * X):
+                    price_list.append([symbol,price_today])
             if 'ETH' == symbol:
-                if kline_data[-1][-2] > (1588 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (1588 * X):
+                    price_list.append([symbol,price_today])
             if 'CAKE' == symbol:
-                if kline_data[-1][-2] > (5.13 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (5.13 * X):
+                    price_list.append([symbol,price_today])
             if 'DOT' == symbol:
-                if kline_data[-1][-2] > (7 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (7 * X):
+                    price_list.append([symbol,price_today])
             if 'FIL' == symbol:
-                if kline_data[-1][-2] > (4.5 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (4.5 * X):
+                    price_list.append([symbol,price_today])
             if 'LINK' == symbol:
-                if kline_data[-1][-2] > (6.5 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (6.5 * X):
+                    price_list.append([symbol,price_today])
             if 'LTC' == symbol:
-                if kline_data[-1][-2] > (72 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (72 * X):
+                    price_list.append([symbol,price_today])
             if 'NEAR' == symbol:
-                if kline_data[-1][-2] > (1.1 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (1.1 * X):
+                    price_list.append([symbol,price_today])
             if 'DASH' == symbol:
-                if kline_data[-1][-2] > (30 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (30 * X):
+                    price_list.append([symbol,price_today])
             if 'SOL' == symbol:
-                if kline_data[-1][-2] > (64 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (64 * X):
+                    price_list.append([symbol,price_today])
             if 'SAND' == symbol:
-                if kline_data[-1][-2] > (0.7 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (0.7 * X):
+                    price_list.append([symbol,price_today])
             if 'AR' == symbol:
-                if kline_data[-1][-2] > (9.25 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (9.25 * X):
+                    price_list.append([symbol,price_today])
             if 'APE' == symbol:
-                if kline_data[-1][-2] > (1.28 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (1.28 * X):
+                    price_list.append([symbol,price_today])
             if 'SNX' == symbol:
-                if kline_data[-1][-2] > (3.8 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (3.8 * X):
+                    price_list.append([symbol,price_today])
             if 'RAY' == symbol:
-                if kline_data[-1][-2] > (1.4 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (1.4 * X):
+                    price_list.append([symbol,price_today])
             if 'MINA' == symbol:
-                if kline_data[-1][-2] > (0.66 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (0.66 * X):
+                    price_list.append([symbol,price_today])
             if 'ICP' == symbol:
-                if kline_data[-1][-2] > (3.52 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (3.52 * X):
+                    price_list.append([symbol,price_today])
             if 'DYDX' == symbol:
-                if kline_data[-1][-2] > (1.96 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (1.96 * X):
+                    price_list.append([symbol,price_today])
             if 'NEO' == symbol:
-                if kline_data[-1][-2] > (7.6 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (7.6 * X):
+                    price_list.append([symbol,price_today])
             if 'MOVR' == symbol:
-                if kline_data[-1][-2] > (22 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (22 * X):
+                    price_list.append([symbol,price_today])
             if 'ADA' == symbol:
-                if kline_data[-1][-2] > (0.26 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (0.26 * X):
+                    price_list.append([symbol,price_today])
             if 'RNDR' == symbol:
-                if kline_data[-1][-2] > (4.6 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (4.6 * X):
+                    price_list.append([symbol,price_today])
             if 'MAGIC' == symbol:
-                if kline_data[-1][-2] > (1.24 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (1.24 * X):
+                    price_list.append([symbol,price_today])
             if 'STX' == symbol:
-                if kline_data[-1][-2] > (0.49 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (0.49 * X):
+                    price_list.append([symbol,price_today])
             if 'C98' == symbol:
-                if kline_data[-1][-2] > (0.2 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (0.2 * X):
+                    price_list.append([symbol,price_today])
             if 'ATOM' == symbol:
-                if kline_data[-1][-2] > (7.1 * X):
-                    price_list.append([symbol,kline_data[-1][-2]])
+                if price_today > (7.1 * X):
+                    price_list.append([symbol,price_today])
+
     # log.info("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list))
     if price_list is None:
         pass
     else:
-        send_ding_msgs("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list),myself='alvin')
+        log.info("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list) )
+        # send_ding_msgs("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list),myself='alvin')
 
 
 
