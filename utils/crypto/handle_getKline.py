@@ -315,7 +315,7 @@ def get_data_Xprice(symbol_list,price_date,X):
     for symbol in symbol_list:
         time.sleep(random.randint(1, 9))
         symbol_usdt = symbol+'/USDT'
-        log.info("symbol_usdt is :{}".format(symbol_usdt))
+        log.info("get_data_Xprice symbol_usdt is :{}".format(symbol_usdt))
         binance_exchange.fetch_order_book(symbol_usdt)
         orderbook = binance_exchange.fetch_order_book(symbol_usdt)
         # 最高买价
@@ -419,11 +419,12 @@ def get_data_Xprice(symbol_list,price_date,X):
                     price_list.append([symbol,price_today])
 
     # log.info("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list))
-    if price_list is None:
-        pass
+    # print("price_list is :{}".format(price_list))
+    if not price_list:
+        log.info("日期是:{},盈利{}倍的token是空,符合的 ".format(new_price_date,X,price_list) )
     else:
         log.info("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list) )
-        # send_ding_msgs("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list),myself='alvin')
+        send_ding_msgs("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list),myself='alvin')
 
 
 
