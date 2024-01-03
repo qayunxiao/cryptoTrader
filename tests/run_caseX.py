@@ -25,30 +25,25 @@ symbol_price = ['BTC', 'ETH', 'DOT', 'FIL', 'LINK', 'LTC', 'NEAR', 'SOL', 'DASH'
 
 def run_get_current_Xprice2():
     # symbol_price =  ['BTC', 'ETH']
-    X = 3
+    X = 2
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
-
 
 def run_get_current_Xprice3():
     # symbol_price =  ['BTC', 'ETH']
     X = 3
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
-
 def run_get_current_Xprice4():
     X = 4
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
-
 
 def run_get_current_Xprice5():
     X = 5
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
-
 def run_get_current_Xprice10():
     X = 10
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
-
 
 if __name__ == '__main__':
     run_get_current_Xprice2()
