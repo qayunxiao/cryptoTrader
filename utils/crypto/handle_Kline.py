@@ -178,17 +178,19 @@ class dealdata():
         elif (self.token == 'LTC') :
             # print("{}:2021年05月10日最高点413，到今天".format( self.token ))
             log.info( "币安 {}:2021年05月10日最高点413,到今天{}".format(self.token,self.date_str) )
-        elif (self.token == 'FIL') :
-        # print("{}:2021年05月10日最高点413，到今天".format( self.token ))
-            log.info( "币安 {}:2021年04月01日最高点238,到今天{}".format(self.token,self.date_str) )
         elif (self.token == 'AGIX') :
             # print("{}:2023年03月01日最高点0.56，到今天".format(self.token ))
             log.info( "币安 {}:2023年03月01日最高点0.56,到今天{}".format(self.token,self.date_str) )
         elif (self.token == 'SNX') :
-        # print("{}:2023年03月01日最高点0.56，到今天".format(self.token ))
             log.info( "币安 {}:2020年07月09日币安上线,到今天{}".format(self.token,self.date_str) )
+        elif (self.token == 'LINK') :
+            log.info( "币安 {}:2021年05月10日最高点52.9,到今天{}".format(self.token,self.date_str) )
+        elif (self.token == 'UNI') :
+            log.info( "币安 {}:2021年05月03日最高点45,到今天{}".format(self.token,self.date_str) )
+        elif (self.token == 'ICP') :
+            log.info( "币安 {}:2021年05月10日最高点776,到今天{}".format(self.token,self.date_str) )
         else:
-            log.info("不存在token")
+            log.info( "币安 {}: 到今天{}".format(self.token,self.date_str) )
         # print("收盘中位数:","%.2f" %np.median(c_price))
         log.info("收盘中位数:%.2f" %np.median(c_price) +"  成交量加权平均价:%.2f" %np.average(c_price,weights=v))
         print("收盘中位数:%.2f" %np.median(c_price) +"  成交量加权平均价:%.2f" %np.average(c_price,weights=v))

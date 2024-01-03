@@ -68,28 +68,26 @@ def send_ding_msg_byfilepath(filepath):
         return requests.post(url=url, data=json.dumps(data), headers=headers).text
 
 
-def send_ding_msgs(msg):
+def send_ding_msgs(msg,myself=None):
     # print("config_path", config_path)
     config = configparser.ConfigParser()
     config.read(config_path, encoding="utf-8-sig")
-    send_secret = config.get("dingding", 'SECRET')
-    send_access_token = config.get("dingding", 'ACCESS_TOKEN')
-
     headers = {'Content-Type': 'application/json', "Charset": "UTF-8"}
-# 这里替换为复制的完整 webhook 地址
+    if myself is None:
+        secret = config.get("dingding", 'SECRET')
+        # 这里替换为复制的完整 webhook 地址
+        send_access_token = config.get("dingding", 'ACCESS_TOKEN')
+    else:
+        send_access_token = config.get("dingding", 'ACCESS_TOKEN_MYSELF')
+        # 这里替换为自己复制过来的加签秘钥
+        secret = config.get("dingding", 'SECRET_MYSELF')
     prefix = "https://oapi.dingtalk.com/robot/send?access_token={}".format(send_access_token)
-    # print("send_secret", send_secret)
-    # print("prefix", prefix)
-
     timestamp = str(round(time.time() * 1000))
-# 这里替换为自己复制过来的加签秘钥
-    secret = config.get("dingding", 'SECRET')
     secret_enc = secret.encode('utf-8')
     string_to_sign = '{}\n{}'.format(timestamp, secret)
     string_to_sign_enc = string_to_sign.encode('utf-8')
     hmac_code = hmac.new(secret_enc, string_to_sign_enc, digestmod=hashlib.sha256).digest()
     sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
-
     url = f'{prefix}&timestamp={timestamp}&sign={sign}'
 
 # 钉钉消息格式，其中 msg 就是我们要发送的具体内容
@@ -102,16 +100,15 @@ def send_ding_msgs(msg):
         },
         "msgtype": "text"
     }
-    print("msg",msg)
+    # print("msg",msg)
     return requests.post(url=url, data=json.dumps(data), headers=headers).text
-
-
 
 
 if __name__ == "__main__":
 
     # # 填写你的钉钉机器人secret和access_token
-    attachmentFile = "D:\Sourcetree\yunxiao\cryptoTrader\log\crypto_20240102_1440.log"
-    print("attachmentFile",attachmentFile)
-    send_ding_msg_byfilepath(attachmentFile)
+    # attachmentFile = "D:\Sourcetree\yunxiao\cryptoTrader\log\crypto_20240102_1440.log"
+    # print("attachmentFile",attachmentFile)
+    # send_ding_msg_byfilepath(attachmentFile)
     # send_ding_msgs("填写你的钉钉机器人secret和access_token")
+    send_ding_msgs("alvin bot all ",myself='alvin')

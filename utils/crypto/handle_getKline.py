@@ -3,6 +3,8 @@ import csv
 import datetime
 import os
 import platform
+import random
+import sys
 
 import ccxt
 import pandas as pd
@@ -11,6 +13,7 @@ import time
 # Python 3.5.3+ 中支持使用 asyncio 和 async/await 的并发异步模式
 # import ccxt.async_support as ccxt
 from handle_ddmsg import send_ding_msgs
+from handle_log import log
 from utils.handle_path import project_path,data_ccxt_path
 
 
@@ -278,8 +281,146 @@ def get_data_price(symbol_list,price_date):
             #to_datetime  将时间戳毫秒转日期 -unit='ms'
             kline_df['date'] = pd.to_datetime(kline_df['time'], unit='ms')
             price_list.append([symbol,kline_data[-1][-2]])
-    # print("日期是:{},价格是:{}".format(new_price_date,price_list))
-    send_ding_msgs("日期是:{},中长线持仓币种与价格是:{}".format(new_price_date,price_list))
+
+    if price_list is None:
+        pass
+    else:
+        # print("日期是:{},价格是:{}".format(new_price_date,price_list))
+        send_ding_msgs("日期是:{},中长线持仓币种与价格是:{}".format(new_price_date, price_list))
+        send_ding_msgs("日期是:{},中长线持仓币种与价格是:{}".format(new_price_date, price_list), myself='alvin')
+
+def get_data_Xprice(symbol_list,price_date,X):
+    #获取单一bi种的历史数据
+    new_price_date = price_date
+    binance_exchange = None
+    if X is None:
+        sys.exit(1)
+    delay =3 #seconds https://api.binance.com/api/v3/exchangeInfo
+    if "Windows" == platform.system():
+        binance_exchange = ccxt.binance({
+            'timeout': 15000,
+            'enableRateLimit': True,
+            'proxies': {'https': "http://127.0.0.1:1082", 'http': "http://127.0.0.1:1081"}
+        })
+    else:
+        binance_exchange = ccxt.binance({
+            'timeout': 15000,
+            'enableRateLimit': True,
+        })
+
+    # 加载市场数据
+    binance_markets = binance_exchange.load_markets()
+    price_list = []
+    price_date = date_to_timestamp(price_date)
+    for symbol in symbol_list:
+        time.sleep(random.randint(1, 9))
+        symbol_usdt = symbol+'/USDT'
+        log.info("symbol_usdt is :{}".format(symbol_usdt))
+        binance_exchange.fetch_order_book(symbol_usdt)
+        orderbook = binance_exchange.fetch_order_book(symbol_usdt)
+        # 最高买价
+        bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
+        # 最低卖价
+        ask = orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None
+        # 价差
+        spread = (ask - bid) if (bid and ask) else None
+        # 市场行情
+        #print ('买价：{:.2f}, 卖价：{:.2f}, 价差：{:.2f}'.format(bid, ask, spread))
+        # K线数据数据获取1620576000  1664640000000
+        binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d')
+        if binance_exchange.has['fetchOHLCV']:
+            # print("fetchOHLCV is :{}".format(binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d')))
+            kline_data = binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d',since=int(price_date))
+            # print("symbol is :{} ,close price is :{}".format(symbol,(kline_data[-1][-2])))
+            time.sleep(delay)
+            #  处理数据格式 时间戳毫秒改日期格式
+            kline_df = pd.DataFrame(kline_data,columns = ["time","open","high","low","close","vol"] )
+            #to_datetime  将时间戳毫秒转日期 -unit='ms'
+            kline_df['date'] = pd.to_datetime(kline_df['time'], unit='ms')
+            if 'BTC' == symbol:
+                if kline_data[-1][-2] > (21328 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'ETH' == symbol:
+                if kline_data[-1][-2] > (1588 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'CAKE' == symbol:
+                if kline_data[-1][-2] > (5.13 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'DOT' == symbol:
+                if kline_data[-1][-2] > (7 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'FIL' == symbol:
+                if kline_data[-1][-2] > (4.5 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'LINK' == symbol:
+                if kline_data[-1][-2] > (6.5 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'LTC' == symbol:
+                if kline_data[-1][-2] > (72 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'NEAR' == symbol:
+                if kline_data[-1][-2] > (1.1 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'DASH' == symbol:
+                if kline_data[-1][-2] > (30 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'SOL' == symbol:
+                if kline_data[-1][-2] > (64 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'SAND' == symbol:
+                if kline_data[-1][-2] > (0.7 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'AR' == symbol:
+                if kline_data[-1][-2] > (9.25 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'APE' == symbol:
+                if kline_data[-1][-2] > (1.28 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'SNX' == symbol:
+                if kline_data[-1][-2] > (3.8 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'RAY' == symbol:
+                if kline_data[-1][-2] > (1.4 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'MINA' == symbol:
+                if kline_data[-1][-2] > (0.66 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'ICP' == symbol:
+                if kline_data[-1][-2] > (3.52 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'DYDX' == symbol:
+                if kline_data[-1][-2] > (1.96 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'NEO' == symbol:
+                if kline_data[-1][-2] > (7.6 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'MOVR' == symbol:
+                if kline_data[-1][-2] > (22 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'ADA' == symbol:
+                if kline_data[-1][-2] > (0.26 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'RNDR' == symbol:
+                if kline_data[-1][-2] > (4.6 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'MAGIC' == symbol:
+                if kline_data[-1][-2] > (1.24 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'STX' == symbol:
+                if kline_data[-1][-2] > (0.49 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'C98' == symbol:
+                if kline_data[-1][-2] > (0.2 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+            if 'ATOM' == symbol:
+                if kline_data[-1][-2] > (7.1 * X):
+                    price_list.append([symbol,kline_data[-1][-2]])
+    # log.info("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list))
+    if price_list is None:
+        pass
+    else:
+        send_ding_msgs("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list),myself='alvin')
+
 
 
 if __name__ == '__main__':
