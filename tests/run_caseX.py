@@ -19,7 +19,7 @@ from utils.crypto.handle_getKline import get_data_Xprice
 
 # symbol_price =  ['BTC', 'ETH']
 symbol_price = ['BTC', 'ETH', 'DOT', 'FIL', 'LINK', 'LTC', 'NEAR', 'SOL', 'DASH', 'SAND', 'AR', 'APE',
-                'SNX', 'RAY', 'MINA', 'ICP', 'DYDX', 'NEO', 'ADA', 'RNDR', 'STX', 'MAGIC', 'GLMR',
+                'SNX', 'MINA', 'ICP' , 'NEO', 'ADA', 'RNDR', 'STX', 'MAGIC', 'GLMR',
                 'C98', 'ATOM', 'BADGER', 'CFX', 'MATIC', 'SSV', 'LDO']
 
 
