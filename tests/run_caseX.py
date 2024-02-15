@@ -18,9 +18,9 @@ print("utils is :{}".format(utils))
 from utils.crypto.handle_getKline import get_data_Xprice
 
 # symbol_price =  ['BTC', 'ETH']
-symbol_price = ['BTC', 'ETH', 'DOT', 'FIL', 'LINK', 'LTC', 'NEAR', 'SOL', 'MATIC', 'DASH', 'SSV', 'SAND', 'AR',
-                'BADGER', 'APE','SNX', 'ARB', 'DOGE', 'ICP', 'MINA', 'NEO', 'STX', 'ADA', 'OP', 'RNDR', 'MAGIC', 'C98', 'ATOM', 'MANTA']
-
+symbol_price = ['BTC', 'ETH', 'DOT', 'LINK', 'FIL', 'OP', 'LTC', 'SOL', 'ENS', 'NEAR', 'PEOPLE', 'SNX',
+                'DYDX', 'STX', 'DASH', 'LDO', 'SAND', 'APE', 'MATIC', 'DOGE', 'ICP', 'APT', 'ADA', 'MAGIC',
+                'MINA', 'MANTA', 'ATOM', 'PYTH', 'BLUR', 'ALT', 'TIA']
 def run_get_current_Xprice2():
     X = 2
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
@@ -45,5 +45,5 @@ if __name__ == '__main__':
     run_get_current_Xprice2()
     run_get_current_Xprice3()
     run_get_current_Xprice4()
-    # run_get_current_Xprice5()
+    run_get_current_Xprice5()
     # run_get_current_Xprice10()
