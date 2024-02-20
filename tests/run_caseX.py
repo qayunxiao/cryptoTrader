@@ -18,54 +18,58 @@ print("utils is :{}".format(utils))
 from utils.crypto.handle_getKline import get_data_Xprice
 
 # symbol_price =  ['BTC', 'ETH']
-symbol_price = ['BTC', 'ETH', 'DOT', 'LINK', 'FIL', 'OP', 'LTC', 'SOL', 'ENS', 'NEAR', 'PEOPLE', 'SNX',
+symbol_price = ['BTC', 'ETH', 'DOT', 'LINK', 'FIL', 'OP', 'SOL', 'ENS', 'NEAR', 'PEOPLE', 'SNX',
                 'DYDX', 'STX', 'DASH', 'LDO', 'SAND', 'APE', 'MATIC', 'DOGE', 'ICP', 'APT', 'ADA', 'MAGIC',
                 'MINA', 'MANTA', 'ATOM', 'PYTH', 'BLUR', 'ALT', 'TIA', 'SEI']
 
 
-def run_get_current_Xprice2():
+def run_get_current_Xprice1():
     X = 2
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
 
-def run_get_current_Xprice3():
+def run_get_current_Xprice2():
     X = 3
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
 
-def run_get_current_Xprice4():
+def run_get_current_Xprice3():
     X = 4
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
 
-def run_get_current_Xprice5():
+def run_get_current_Xprice4():
     X = 5
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
-def run_get_current_Xprice6():
+def run_get_current_Xprice5():
     X = 6
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
-def run_get_current_Xprice7():
+def run_get_current_Xprice6():
     X = 7
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
-def run_get_current_Xprice8():
+def run_get_current_Xprice7():
     X = 8
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
-def run_get_current_Xprice9():
+def run_get_current_Xprice8():
     X = 9
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
-def run_get_current_Xprice10():
+def run_get_current_Xprice9():
     X = 10
     get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
+def run_get_current_Xprice19():
+    X = 20
+    get_data_Xprice(symbol_price, str(datetime.datetime.now().date()), X)
 
 if __name__ == '__main__':
+    run_get_current_Xprice1()
     run_get_current_Xprice2()
     run_get_current_Xprice3()
     run_get_current_Xprice4()
     run_get_current_Xprice5()
-    # run_get_current_Xprice10()
+    run_get_current_Xprice9()

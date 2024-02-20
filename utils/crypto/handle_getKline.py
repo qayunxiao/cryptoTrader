@@ -341,90 +341,112 @@ def get_data_Xprice(symbol_list,price_date,X):
             price_today = kline_data[-1][-2]
             if 'BTC' == symbol:
                 if price_today > (21328 * X):
-                    price_list.append([symbol,price_today])
+                    price_list.append([symbol,price_today,21328])
             if 'ETH' == symbol:
                 if price_today > (1588 * X):
-                    price_list.append([symbol,price_today])
-            if 'CAKE' == symbol:
-                if price_today > (5.13 * X):
-                    price_list.append([symbol,price_today])
+                    price_list.append([symbol,price_today,1588])
             if 'DOT' == symbol:
                 if price_today > (7 * X):
-                    price_list.append([symbol,price_today])
-            if 'FIL' == symbol:
-                if price_today > (4.5 * X):
-                    price_list.append([symbol,price_today])
+                    price_list.append([symbol,price_today,7])
             if 'LINK' == symbol:
                 if price_today > (6.5 * X):
-                    price_list.append([symbol,price_today])
-            if 'LTC' == symbol:
-                if price_today > (72 * X):
-                    price_list.append([symbol,price_today])
-            if 'NEAR' == symbol:
-                if price_today > (1.1 * X):
-                    price_list.append([symbol,price_today])
-            if 'DASH' == symbol:
-                if price_today > (30 * X):
-                    price_list.append([symbol,price_today])
+                    price_list.append([symbol,price_today,6.5])
+            if 'CAKE' == symbol:
+                if price_today > (5.13 * X):
+                    price_list.append([symbol,price_today,5.13])
+            if 'FIL' == symbol:
+                if price_today > (4.5 * X):
+                    price_list.append([symbol,price_today,4.5])
+            if 'OP' == symbol:
+                if price_today > (3.22 * X):
+                    price_list.append([symbol,price_today,3.22])
+            # if 'LTC' == symbol:
+            #     if price_today > (72 * X):
+            #         price_list.append([symbol,price_today])
             if 'SOL' == symbol:
                 if price_today > (64 * X):
-                    price_list.append([symbol,price_today])
-            if 'SAND' == symbol:
-                if price_today > (0.7 * X):
-                    price_list.append([symbol,price_today])
-            if 'AR' == symbol:
-                if price_today > (9.25 * X):
-                    price_list.append([symbol,price_today])
-            if 'APE' == symbol:
-                if price_today > (1.28 * X):
-                    price_list.append([symbol,price_today])
+                    price_list.append([symbol,price_today,64])
+            if 'ENS' == symbol:
+                if price_today > (20 * X):
+                    price_list.append([symbol,price_today,20])
+            if 'NEAR' == symbol:
+                if price_today > (1.1 * X):
+                    price_list.append([symbol,price_today,1.1])
+            if 'PEOPLE' == symbol:
+                if price_today > (0.0285 * X):
+                    price_list.append([symbol,price_today,0.0285])
             if 'SNX' == symbol:
                 if price_today > (3.8 * X):
-                    price_list.append([symbol,price_today])
-            if 'RAY' == symbol:
-                if price_today > (1.4 * X):
-                    price_list.append([symbol,price_today])
-            if 'MINA' == symbol:
-                if price_today > (0.66 * X):
-                    price_list.append([symbol,price_today])
-            if 'ICP' == symbol:
-                if price_today > (3.52 * X):
-                    price_list.append([symbol,price_today])
+                    price_list.append([symbol,price_today,3.8])
             if 'DYDX' == symbol:
                 if price_today > (1.96 * X):
-                    price_list.append([symbol,price_today])
-            if 'NEO' == symbol:
-                if price_today > (7.6 * X):
-                    price_list.append([symbol,price_today])
-            if 'MOVR' == symbol:
-                if price_today > (22 * X):
-                    price_list.append([symbol,price_today])
-            if 'ADA' == symbol:
-                if price_today > (0.26 * X):
-                    price_list.append([symbol,price_today])
-            if 'RNDR' == symbol:
-                if price_today > (4.6 * X):
-                    price_list.append([symbol,price_today])
-            if 'MAGIC' == symbol:
-                if price_today > (1.24 * X):
-                    price_list.append([symbol,price_today])
+                    price_list.append([symbol,price_today,1.96])
             if 'STX' == symbol:
                 if price_today > (0.49 * X):
-                    price_list.append([symbol,price_today])
-            if 'C98' == symbol:
-                if price_today > (0.2 * X):
-                    price_list.append([symbol,price_today])
+                    price_list.append([symbol,price_today,0.49])
+            if 'DASH' == symbol:
+                if price_today > (30 * X):
+                    price_list.append([symbol,price_today,30])
+            if 'LDO' == symbol:
+                if price_today > (3.05 * X):
+                    price_list.append([symbol,price_today,3.05])
+            if 'SAND' == symbol:
+                if price_today > (0.7 * X):
+                    price_list.append([symbol,price_today,0.7])
+            if 'APE' == symbol:
+                if price_today > (1.28 * X):
+                    price_list.append([symbol,price_today,1.28])
+            if 'MATIC' == symbol:
+                if price_today > (0.78 * X):
+                    price_list.append([symbol,price_today,0.78])
+            if 'DOGE' == symbol:
+                if price_today > (0.0916 * X):
+                    price_list.append([symbol,price_today,0.0916])
+            if 'ICP' == symbol:
+                if price_today > (3.52 * X):
+                    price_list.append([symbol,price_today,3.52])
+            if 'APT' == symbol:
+                if price_today > (8.7 * X):
+                    price_list.append([symbol,price_today,8.7])
+            if 'ADA' == symbol:
+                if price_today > (0.26 * X):
+                    price_list.append([symbol,price_today,0.26])
+            if 'MAGIC' == symbol:
+                if price_today > (1.24 * X):
+                    price_list.append([symbol,price_today,1.24])
+            if 'MINA' == symbol:
+                if price_today > (0.66 * X):
+                    price_list.append([symbol,price_today,0.66])
+
+            if 'MANTA' == symbol:
+                if price_today > (2.55 * X):
+                    price_list.append([symbol,price_today,2.55])
             if 'ATOM' == symbol:
                 if price_today > (7.1 * X):
-                    price_list.append([symbol,price_today])
+                    price_list.append([symbol,price_today,7.1])
+            if 'PYTH' == symbol:
+                if price_today > (0.34 * X):
+                    price_list.append([symbol,price_today,0.34])
+            if 'BLUR' == symbol:
+                if price_today > (0.62 * X):
+                    price_list.append([symbol,price_today,0.62])
+            if 'ALT' == symbol:
+                if price_today > (0.35 * X):
+                    price_list.append([symbol,price_today,0.35])
+            if 'TIA' == symbol:
+                if price_today > (15 * X):
+                    price_list.append([symbol,price_today,15])
+            if 'SEI' == symbol:
+                if price_today > (0.59 * X):
+                    price_list.append([symbol,price_today,0.59])
 
     # log.info("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list))
     # print("price_list is :{}".format(price_list))
     if not price_list:
-        log.info("日期是:{},盈利{}倍的token是空,符合的 ".format(new_price_date,X,price_list) )
+        log.info("日期是:{},盈利{}倍的token是空,符合的 ".format(new_price_date,X-1,price_list) )
     else:
-        log.info("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list) )
-        send_ding_msgs("日期是:{},目前盈利{}倍的token,现价是:{}".format(new_price_date,X,price_list),myself='alvin')
+        log.info("日期是:{},目前盈利{}倍的token信息:{}".format(new_price_date,X-1,price_list) )
+        send_ding_msgs("日期是:{},目前盈利{}倍的token信息:{}".format(new_price_date,X-1,price_list),myself='alvin')
 
 
 

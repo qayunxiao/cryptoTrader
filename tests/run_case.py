@@ -21,7 +21,7 @@ from process_data.symbol_price_history import get_history_data
 
 def run_get_current_price():
     # symbol_price =  ['BTC', 'ETH']
-    symbol_price = ['BTC','ETH','DOT','LINK','FIL','OP','LTC','SOL','ENS','NEAR','PEOPLE','SNX',
+    symbol_price = ['BTC','ETH','DOT','LINK','FIL','OP','SOL','ENS','NEAR','PEOPLE','SNX',
                     'DYDX','STX', 'DASH','LDO','SAND','APE','MATIC','DOGE','ICP','APT','ADA','MAGIC',
                     'MINA','MANTA','ATOM','PYTH','BLUR','ALT','TIA','SEI']
     get_data_price(symbol_price,str(datetime.datetime.now().date()))
