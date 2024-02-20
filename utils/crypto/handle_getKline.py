@@ -286,8 +286,8 @@ def get_data_price(symbol_list,price_date):
         pass
     else:
         # print("日期是:{},价格是:{}".format(new_price_date,price_list))
-        send_ding_msgs("日期是:{},中长线持仓币种与价格是:{}".format(new_price_date, price_list))
-        send_ding_msgs("日期是:{},中长线持仓币种与价格是:{}".format(new_price_date, price_list), myself='alvin')
+        send_ding_msgs("日期是:{},中长线持仓币种与当前价格是:{}".format(new_price_date, price_list))
+        send_ding_msgs("日期是:{},中长线持仓币种与当前价格是:{}".format(new_price_date, price_list), myself='alvin')
 
 def get_data_Xprice(symbol_list,costPricedic,price_date,X):
     #获取单一bi种的历史数据
