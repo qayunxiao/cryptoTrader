@@ -9,7 +9,7 @@ import os
 import sys
 import time
 
-from handle_ddmsg import send_ding_msgs
+from utils.handle_ddmsg import send_ding_msgs
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 utils = os.path.join(BASE_DIR, 'utils')
@@ -85,7 +85,7 @@ def run_get_current_Xprice19():
 if __name__ == '__main__':
     run_get_current_Xprice1()
     run_get_current_Xprice2()
-    # run_get_current_Xprice3()
-    # run_get_current_Xprice4()
-    # run_get_current_Xprice5()
+    run_get_current_Xprice3()
+    run_get_current_Xprice4()
+    run_get_current_Xprice5()
     # run_get_current_Xprice9()
