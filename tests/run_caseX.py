@@ -9,13 +9,13 @@ import os
 import sys
 import time
 
-from utils.handle_ddmsg import send_ding_msgs
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 utils = os.path.join(BASE_DIR, 'utils')
 sys.path.append(BASE_DIR)
 sys.path.append(utils)
-print("utils is :{}".format(utils))
+# print("utils is :{}".format(utils))
+from utils.handle_ddmsg import send_ding_msgs
 
 from utils.crypto.handle_getKline import get_data_Xprice
 
