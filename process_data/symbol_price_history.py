@@ -118,7 +118,7 @@ def get_history_data(symbol_list):
         receicers = ["qawanghailin@gmail.com", "kaysen820@gmail.com"]
         attachmentFile = get_newlogfile()
         # send_mail(receicers, attachmentFile)
-        send_ding_msg_byfilepath(attachmentFile)
+        # send_ding_msg_byfilepath(attachmentFile)
         # send_ding_msgs(msg_01)
         # print("msg_01 is :{}".format(msg_01))
 
