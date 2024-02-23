@@ -9,16 +9,17 @@ import os
 import sys
 import time
 
-from process_data.symbol_price_history import get_history_data
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 utils = os.path.join(BASE_DIR, 'utils')
+process_data = os.path.join(BASE_DIR, 'process_data')
 sys.path.append(BASE_DIR)
 sys.path.append(utils)
+sys.path.append(process_data)
 # print("utils is :{}".format(utils))
 from utils.handle_ddmsg import send_ding_msgs
-
 from utils.crypto.handle_getKline import get_data_Xprice, get_data_price
+from process_data.symbol_price_history import get_history_data
 
 
 class run_priceX():
