@@ -12,13 +12,13 @@
 import os
 import sys
 
-from api_list.handle_ahr999new import get_api_ahr999new
-from utils.handle_ddmsg import send_ding_msg_byfilepath, send_ding_msgs, attachmentFile
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(BASE_DIR)
 import time
-
+from api_list.handle_ahr999new import get_api_ahr999new
+from utils.handle_ddmsg import send_ding_msg_byfilepath, send_ding_msgs
 from utils.crypto.handle_getKline import get_data
 from utils.crypto.handle_Kline import dealdata
 from utils.handle_email import send_mail
