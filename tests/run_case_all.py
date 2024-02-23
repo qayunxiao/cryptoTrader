@@ -38,7 +38,7 @@ class run_priceX():
                              'MINA': 0.66, 'MANTA': 2.55, 'ATOM': 7.1, 'PYTH': 0.34, 'BLUR': 0.62, 'ALT': 0.35,
                              'TIA': 15,
                              'SEI': 0.59}
-        self.symbol_price_history = ['BTC', 'ETH', 'DOT', 'FIL', 'LINK', 'LTC', 'ICP', 'SNX', 'LINK', 'UNI']
+        self.symbol_price_history = ['BTC', 'ETH', 'DOT', 'FIL', 'LINK', 'UNI']
 
     def run_get_history_data(self):
         get_history_data(self.symbol_price_history)

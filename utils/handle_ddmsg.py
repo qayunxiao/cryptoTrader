@@ -105,10 +105,10 @@ def send_ding_msgs(msg,myself=None):
 
 
 if __name__ == "__main__":
-
+    pass
     # # 填写你的钉钉机器人secret和access_token
-    # attachmentFile = "D:\Sourcetree\yunxiao\cryptoTrader\log\crypto_20240102_1440.log"
+    # attachmentFile = "D:\Sourcetree\yunxiao\cryptoTrader\log\crypto_20240223_0930.log"
     # print("attachmentFile",attachmentFile)
     # send_ding_msg_byfilepath(attachmentFile)
     # send_ding_msgs("填写你的钉钉机器人secret和access_token")
-    send_ding_msgs("alvin bot all ",myself='alvin')
+    # send_ding_msgs("alvin bot all ",myself='alvin')

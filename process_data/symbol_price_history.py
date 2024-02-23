@@ -13,7 +13,7 @@ import os
 import sys
 
 from api_list.handle_ahr999new import get_api_ahr999new
-from utils.handle_ddmsg import send_ding_msg_byfilepath, send_ding_msgs
+from utils.handle_ddmsg import send_ding_msg_byfilepath, send_ding_msgs, attachmentFile
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(BASE_DIR)
@@ -118,12 +118,13 @@ def get_history_data(symbol_list):
         receicers = ["qawanghailin@gmail.com", "kaysen820@gmail.com"]
         attachmentFile = get_newlogfile()
         # send_mail(receicers, attachmentFile)
-        # send_ding_msg_byfilepath(attachmentFile)
-        # send_ding_msgs(msg_01)
+        send_ding_msg_byfilepath(attachmentFile)
+        send_ding_msgs(msg_01)
         # print("msg_01 is :{}".format(msg_01))
 
 
 if __name__ == '__main__':
+    pass
     # run_get_current_price()
-    symbol_price_history = ['BTC', 'ETH']
-    get_history_data(symbol_price_history)
+    # symbol_price_history = ['BTC', 'ETH']
+    # get_history_data(symbol_price_history)
