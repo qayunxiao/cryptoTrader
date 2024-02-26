@@ -8,10 +8,7 @@ import configparser
 import hmac
 import hashlib
 import base64
-import json
 import urllib.parse
-import time
-import requests
 from utils.handle_path import config_path, get_newlogfile
 import requests
 import json
