@@ -16,7 +16,8 @@ process_data = os.path.join(BASE_DIR, 'process_data')
 sys.path.append(BASE_DIR)
 sys.path.append(utils)
 sys.path.append(process_data)
-# print("utils is :{}".format(utils))
+print("utils is :{}".format(utils))
+print("process_data is :{}".format(process_data))
 from utils.handle_ddmsg import send_ding_msgs
 from utils.crypto.handle_getKline import get_data_Xprice, get_data_price
 from process_data.symbol_price_history import get_history_data
@@ -39,7 +40,7 @@ class run_priceX():
                              'TIA': 15,
                              'SEI': 0.59}
         self.symbol_price_history = ['BTC', 'ETH', 'DOT', 'FIL', 'LINK', 'UNI']
-        self.baibeisymbol_price = {'IOTX':0.038,'ZKF':0.01,'PYTH':0.4,'BONK':0.0000099 ,'BAKE':0.45,'MUBI':0.13,'SATS':0.00000075,'ONDO':0.32,'SEI':0.6}
+        self.baibeisymbol_price = {'IOTX':0.038,'ZKF':0.01,'PYTH':0.4,'BONK':0.0000099,'BAKE':0.45,'MUBI':0.13,'SATS':0.00000075,'ONDO':0.32,'SEI':0.6}
 
     def run_get_history_data(self):
         get_history_data(self.symbol_price_history)
