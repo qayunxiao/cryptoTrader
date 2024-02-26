@@ -41,7 +41,7 @@ def send_ding_msg_byfilepath(filepath):
     sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
 
     url = f'{prefix}&timestamp={timestamp}&sign={sign}'
-
+    print("filepath :{}".format(filepath))
     with open(filepath,"r",encoding="utf-8") as file:
         msg_tmp = file.readlines()
         # print("msg_tmp",len(msg_tmp))
@@ -111,5 +111,5 @@ if __name__ == "__main__":
     # print("attachmentFile",attachmentFile)
     # send_ding_msg_byfilepath(attachmentFile)
     # send_ding_msgs("各位vip群友，今天是元宵佳节，龙年元宵特别圆，圆了你的梦想，币圈稳赚，希望大家事事随缘，节日快乐！")
-    send_ding_msgs("alvin bot all ")
+    # send_ding_msgs("alvin bot all ")
     # send_ding_msgs("alvin bot all ",myself='alvin')
