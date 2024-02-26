@@ -19,6 +19,7 @@ import time
 def send_ding_msg_byfilepath(filepath):
 
     """发送钉钉群消息"""
+    global msg
     print("config_path", config_path)
     config = configparser.ConfigParser()
     config.read(config_path, encoding="utf-8-sig")
@@ -61,7 +62,7 @@ def send_ding_msg_byfilepath(filepath):
             },
             "msgtype": "text"
         }
-        print("msg",msg)
+        print("send_ding_msg_byfilepath msg",msg)
         return requests.post(url=url, data=json.dumps(data), headers=headers).text
 
 
@@ -97,8 +98,8 @@ def send_ding_msgs(msg,myself=None):
         },
         "msgtype": "text"
     }
-    # print("msg",msg)
-    return requests.post(url=url, data=json.dumps(data), headers=headers).text
+    print("msg",msg)
+    # return requests.post(url=url, data=json.dumps(data), headers=headers).text
 
 
 if __name__ == "__main__":

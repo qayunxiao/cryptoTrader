@@ -75,7 +75,7 @@ def get_history_data(symbol_list):
     msg_01="恐慌和ahr指标汇总:日期：{},恐慌指数:{} ,昨天恐慌指数:{}, ahr999值:{},昨天ahr999值:{},定投线1.2,抄底线0.45 ,200日定投成本:{}".format(
         date_day, (fear_value[0]),  fear_value[1],(resapi_ahr_data_today["ahr999"]),(resapi_ahr_data_yesterday["ahr999"]),  (resapi_ahr_data_today['avg']))
     # print(msg_01)
-    log.warning(msg_01)
+    # log.warning(msg_01)
     # print("date_day is :{}".format(date_day))
 
      # 综合抄底判断
