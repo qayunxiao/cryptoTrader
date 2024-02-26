@@ -110,5 +110,6 @@ if __name__ == "__main__":
     # attachmentFile = "D:\Sourcetree\yunxiao\cryptoTrader\log\crypto_20240223_0930.log"
     # print("attachmentFile",attachmentFile)
     # send_ding_msg_byfilepath(attachmentFile)
-    # send_ding_msgs("填写你的钉钉机器人secret和access_token")
+    # send_ding_msgs("各位vip群友，今天是元宵佳节，龙年元宵特别圆，圆了你的梦想，币圈稳赚，希望大家事事随缘，节日快乐！")
+    send_ding_msgs("alvin bot all ")
     # send_ding_msgs("alvin bot all ",myself='alvin')

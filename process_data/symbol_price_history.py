@@ -10,6 +10,7 @@
 # @File    : handle_main.py
 # @Software: PyCharm
 import os
+import random
 import sys
 
 
@@ -71,7 +72,7 @@ def get_history_data(symbol_list):
     # print("resapi_ahr_data_today is :{}".format(resapi_ahr_data_today["date"]))
     # print("resapi_ahr_data_yesterday is :{}".format(resapi_ahr_data_yesterday["date"]))
 
-    msg_01="恐慌和ahr指标汇总:日期：{},恐慌指数:{} ,昨天恐慌指数:{}, ahr999值:{},昨天ahr999值:{},定投线1.2,""抄底线0.45 ,200日定投成本:{}".format(
+    msg_01="恐慌和ahr指标汇总:日期：{},恐慌指数:{} ,昨天恐慌指数:{}, ahr999值:{},昨天ahr999值:{},定投线1.2,抄底线0.45 ,200日定投成本:{}".format(
         date_day, (fear_value[0]),  fear_value[1],(resapi_ahr_data_today["ahr999"]),(resapi_ahr_data_yesterday["ahr999"]),  (resapi_ahr_data_today['avg']))
     # print(msg_01)
     log.warning(msg_01)
@@ -79,13 +80,11 @@ def get_history_data(symbol_list):
 
      # 综合抄底判断
     if fear_value[0] < 40 or resapi_ahr_data_today["ahr999"] < 0.5:
-    # if fear_value[0] < 40:
-        log.error("Tips综合抄底判断:当前恐慌指数:43.0,当前ahr999值:0.4462 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
-        send_ding_msgs("Tips综合抄底判断:当前恐慌指数:43.0,当前ahr999值:0.4462 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        log.error("Tips综合抄底判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        send_ding_msgs("Tips综合抄底判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     # 逃顶判断
-    if fear_value[0] > 90 or resapi_ahr_data_today["ahr999"]  > 1.2:
-    # if fear_value[0] > 90:
+    if fear_value[0] > 75 or resapi_ahr_data_today["ahr999"] > 1.2:
         log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
         send_ding_msgs("综合逃顶判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
@@ -95,7 +94,7 @@ def get_history_data(symbol_list):
         # symbol_list = ['BTC', 'ETH', 'DOT', 'LTC', 'FIL']
         print("{}:全量币安交易所行情token处理开始.....".format((time.strftime('%Y年%m月%d日'))))
         for token in symbol_list:
-            time.sleep(7)  # 控制频率
+            time.sleep(random.randint(2,5))  # 控制频率
             symbol = token + '/USDT'
             print("{}:开始下载K线数据{} ...".format(time.strftime('%Y年%m月%d日'), symbol))
             get_data(symbol)
@@ -119,7 +118,7 @@ def get_history_data(symbol_list):
         attachmentFile = get_newlogfile()
         # send_mail(receicers, attachmentFile)
         send_ding_msg_byfilepath(attachmentFile)
-        send_ding_msgs(msg_01)
+        # send_ding_msgs(msg_01)
         # print("msg_01 is :{}".format(msg_01))
 
 

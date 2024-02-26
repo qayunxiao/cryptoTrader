@@ -123,7 +123,7 @@ class get_api_fear():
     def get_current_fear_value(self):
         if (self.current_fear_value !=0):
             # print("current_fear_value",self.current_fear_value)
-            return  self.current_fear_value
+            return self.current_fear_value
 
     def deal_fear_data_all(self,skipdays):
         log.info( "恐慌指数说明:0-24极度恐慌,25-29恐惧,50-74贪婪,75-100极度贪婪，最好策略别人恐慌我贪婪，牛转熊注意，别人贪婪我恐慌")
@@ -165,7 +165,7 @@ class get_api_fear():
             log.info( "恐慌指数:从2018年2月1日到今天最高点计算,极度恐慌:{},平均恐慌情绪:{},极度贪婪:{},今日恐慌指数:{}".format(fear.min(),( round(np.average(fear),2)  ),(fear.max()),(fear_list[-1]) )    )
             log.warn("恐慌指数:从2018年2月1日开始到今天,数据总数:{},其中低于24的极度恐慌次数:{},占比:{}%,其中高于75的极度贪婪次数:{},占比:{}%".format(count_total,count_min,((Decimal((count_min/count_total)).quantize(Decimal('0.00')))*100),count_max,((Decimal((count_max/count_total)).quantize(Decimal('0.00')))*100) ))
         else:
-            print( "恐慌指数:从2021年11月10日到今天最高点计算,极度恐慌:{},平均恐慌情绪:{},极度贪婪:{},今日恐慌指数:{}".format(fear.min(),( round(np.average(fear),2)  ),(fear.max()),(fear_list[-1]) )    )
+            print( "恐慌指数:从2021年11月10日到今天最高点计算,极度恐慌:{},平均恐慌情绪:{},极度贪婪:{},今日恐慌指数:{}".format(fear.min(),( round(np.average(fear),2)),(fear.max()),(fear_list[-1]) )    )
             print( "恐慌指数:从2021年11月10日开始到今天,数据总数:{},其中低于24的极度恐慌次数:{},占比:{}%,其中高于75的极度贪婪次数:{},占比:{}%".format(count_total,count_min,((Decimal((count_min/count_total)).quantize(Decimal('0.00')))*100),count_max,((Decimal((count_max/count_total)).quantize(Decimal('0.00')))*100) ))
             log.info( "恐慌指数:从2021年11月10日到今天最高点计算,极度恐慌:{},平均恐慌情绪:{},极度贪婪:{},今日恐慌指数:{}".format(fear.min(),( round(np.average(fear),2)  ),(fear.max()),(fear_list[-1]) )    )
             log.error( "恐慌指数:从2021年11月10日开始到今天,数据总数:{},其中低于24的极度恐慌次数:{},占比:{}%,其中高于75的极度贪婪次数:{},占比:{}%".format(count_total,count_min,((Decimal((count_min/count_total)).quantize(Decimal('0.00')))*100),count_max,((Decimal((count_max/count_total)).quantize(Decimal('0.00')))*100) ))
