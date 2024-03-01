@@ -84,7 +84,7 @@ def get_history_data(symbol_list):
         send_ding_msgs("Tips综合抄底判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     # 逃顶判断
-    if fear_value[0] > 75 or resapi_ahr_data_today["ahr999"] > 1.2:
+    if fear_value[0] > 90 or resapi_ahr_data_today["ahr999"] > 1.5:
         log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
         send_ding_msgs("综合逃顶判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
