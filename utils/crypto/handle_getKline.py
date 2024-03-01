@@ -260,7 +260,7 @@ def get_data_price(symbol_list, price_date, today_price_list):
     price_date = date_to_timestamp(price_date)
     for symbol in symbol_list:
         symbol_usdt = symbol + '/USDT'
-        print("symbol_usdt is :{}".format(symbol_usdt))
+        # print("symbol_usdt is :{}".format(symbol_usdt))
         binance_exchange.fetch_order_book(symbol_usdt)
         orderbook = binance_exchange.fetch_order_book(symbol_usdt)
         # 最高买价
@@ -338,9 +338,11 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
     else:
         if price_percentagelistFlag:
             log.info("目前持仓币种数量:{} ,token盈亏情况{},浮亏的信息是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative))
+            send_ding_msgs("目前持仓币种数量:{} ,token盈亏情况{},浮亏的信息是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative))
             send_ding_msgs("目前持仓币种数量:{} ,token盈亏情况{},浮亏的信息是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative), myself='alvin')
         else:
             log.info("目前持仓币种数量:{} ,token盈亏情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist))
+            send_ding_msgs("目前持仓币种数量:{} ,token盈亏情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist))
             send_ding_msgs("目前持仓币种数量:{} ,token盈亏情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist), myself='alvin')
 
 
