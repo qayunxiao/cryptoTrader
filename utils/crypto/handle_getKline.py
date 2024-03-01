@@ -303,7 +303,7 @@ def get_data_Xprice(symbol_list, costPricedic, X, today_price_list):
         sys.exit(1)
     price_list = []
     for symbol in symbol_list:
-        time.sleep(random.randint(1, 3))
+        # time.sleep(random.randint(1, 3))
         if symbol in costPricedic:
             for data in today_price_list:
                 if symbol in data:
@@ -321,7 +321,7 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
     price_percentagelist = []
     # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
     for symbol in symbol_list:
-        time.sleep(random.randint(1, 3))
+        # time.sleep(random.randint(1, 3))
         if symbol in costPricedic:
             for data in today_price_list:
                 if symbol in data:
@@ -332,7 +332,7 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
         log.info("price_percentagelist is null")
     else:
         log.info("目前持仓token盈亏{}".format(price_percentagelist))
-        send_ding_msgs("目前持仓token盈亏{}".format(price_percentagelist), myself='alvin')
+        send_ding_msgs("目前持仓币种数量:{} ,token盈亏情况{}".format(len(price_percentagelist),price_percentagelist), myself='alvin')
 
 
 if __name__ == '__main__':
@@ -354,4 +354,4 @@ if __name__ == '__main__':
                         ['ATOM', 11.395], ['PYTH', 0.6691], ['BLUR', 0.7329], ['ALT', 0.47687], ['TIA', 16.83],
                         ['SEI', 0.8515]]
 
-    get_data_NXprice(symbol_list, costPricedic, today_price_list)
+    get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
