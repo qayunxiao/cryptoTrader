@@ -319,6 +319,8 @@ def get_data_Xprice(symbol_list, costPricedic, X, today_price_list):
 def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
     log.info("get_data get_data_pricepercentage  is running ...")
     price_percentagelist = []
+    price_percentagelist_negative = []
+    price_percentagelistFlag = False
     # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
     for symbol in symbol_list:
         # time.sleep(random.randint(1, 3))
@@ -328,11 +330,18 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
                     increase = (data[1] - costPricedic[symbol]) / costPricedic[symbol]
                     formatted_percentage = "{:.2%}".format(increase)
                     price_percentagelist.append([symbol, costPricedic[symbol], data[1], formatted_percentage])
+                    if increase < 0:
+                        price_percentagelistFlag = True
+                        price_percentagelist_negative.append([symbol, costPricedic[symbol], data[1], formatted_percentage])
     if not price_percentagelist:
         log.info("price_percentagelist is null")
     else:
-        log.info("目前持仓token盈亏{}".format(price_percentagelist))
-        send_ding_msgs("目前持仓币种数量:{} ,token盈亏情况{}".format(len(price_percentagelist),price_percentagelist), myself='alvin')
+        if price_percentagelistFlag:
+            log.info("目前持仓币种数量:{} ,token盈亏情况{},浮亏的信息是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative))
+            send_ding_msgs("目前持仓币种数量:{} ,token盈亏情况{},浮亏的信息是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative), myself='alvin')
+        else:
+            log.info("目前持仓币种数量:{} ,token盈亏情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist))
+            send_ding_msgs("目前持仓币种数量:{} ,token盈亏情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist), myself='alvin')
 
 
 if __name__ == '__main__':
@@ -346,7 +355,7 @@ if __name__ == '__main__':
                     'MINA': 0.66, 'MANTA': 2.55, 'ATOM': 7.1, 'PYTH': 0.34, 'BLUR': 0.62, 'ALT': 0.35,
                     'TIA': 15,
                     'SEI': 0.59}
-    today_price_list = [['BTC', 62117.81], ['ETH', 3424.5], ['DOT', 3.5], ['LINK', 19.909], ['FIL', 8.302],
+    today_price_list = [['BTC', 62117.81], ['ETH', 3424.5], ['DOT', 6], ['LINK', 19.909], ['FIL', 8.302],
                         ['OP', 3.797], ['SOL', 133.26], ['ENS', 21.44], ['NEAR', 3.987], ['PEOPLE', 0.04369],
                         ['SNX', 4.355], ['DYDX', 3.444], ['STX', 2.9841], ['DASH', 33.14], ['LDO', 3.434],
                         ['SAND', 0.6163], ['APE', 1.962], ['MATIC', 1.0211], ['DOGE', 0.1223], ['ICP', 12.803],
