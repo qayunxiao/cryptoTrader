@@ -284,21 +284,21 @@ def get_data_price(symbol_list, price_date, today_price_list):
             kline_df['date'] = pd.to_datetime(kline_df['time'], unit='ms')
             price_today = kline_data[-1][-2]
             price_list.append([symbol, price_today])
-            # log.info("price_today is :{}".format(price_today))
             # log.info("price_today type is :{}".format(type(price_today)))
             today_price_list.append([symbol, price_today])
+            log.info("today_price_list is :{}".format(today_price_list))
 
-    if price_list is None:
-        pass
+    if today_price_list is None:
+        send_ding_msgs("日期是:{},获取今日报价是空:{},异常退出！".format(new_price_date, today_price_list), myself='alvin')
+        sys.exit(-1)
     else:
         # print("日期是:{},价格是:{}".format(new_price_date, price_list))
-        send_ding_msgs("日期是:{},中长线持仓币种与当前价格是:{}".format(new_price_date, price_list))
+        # send_ding_msgs("日期是:{},中长线持仓币种与当前价格是:{}".format(new_price_date, price_list))
         send_ding_msgs("日期是:{},中长线持仓币种与当前价格是:{}".format(new_price_date, price_list), myself='alvin')
 
 
-
 def get_data_Xprice(symbol_list, costPricedic, X, today_price_list):
-    log.info("get_data_Xprice :{} is running ...".format(X-1))
+    log.info("get_data_Xprice :{} is running ...".format(X - 1))
     if X is None:
         sys.exit(1)
     price_list = []
@@ -316,5 +316,42 @@ def get_data_Xprice(symbol_list, costPricedic, X, today_price_list):
         send_ding_msgs("目前浮盈{}倍的token信息:{}".format(X - 1, price_list), myself='alvin')
 
 
+def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
+    log.info("get_data get_data_pricepercentage  is running ...")
+    price_percentagelist = []
+    # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
+    for symbol in symbol_list:
+        time.sleep(random.randint(1, 3))
+        if symbol in costPricedic:
+            for data in today_price_list:
+                if symbol in data:
+                    increase = (data[1] - costPricedic[symbol]) / costPricedic[symbol]
+                    formatted_percentage = "{:.2%}".format(increase)
+                    price_percentagelist.append([symbol, costPricedic[symbol], data[1], formatted_percentage])
+    if not price_percentagelist:
+        log.info("price_percentagelist is null")
+    else:
+        log.info("目前持仓token盈亏{}".format(price_percentagelist))
+        send_ding_msgs("目前持仓token盈亏{}".format(price_percentagelist), myself='alvin')
+
+
 if __name__ == '__main__':
-    get_data_hisroty(symbol='SNX', start_date='2023-11-11')
+    symbol_list = ['BTC', 'ETH', 'DOT']
+    costPricedic = {'BTC': 21328, 'ETH': 1588, 'DOT': 7, 'LINK': 6.5, 'FIL': 4.5, 'OP': 3.22, 'SOL': 64,
+                    'ENS': 20,
+                    'NEAR': 1.1, 'PEOPLE': 0.0285, 'SNX': 3.8, 'DYDX': 1.96,
+                    'STX': 0.49, 'DASH': 30, 'LDO': 3.05, 'SAND': 0.7, 'APE': 1.28, 'MATIC': 0.78,
+                    'DOGE': 0.0916,
+                    'ICP': 3.52, 'APT': 8.7, 'ADA': 0.26, 'MAGIC': 1.24,
+                    'MINA': 0.66, 'MANTA': 2.55, 'ATOM': 7.1, 'PYTH': 0.34, 'BLUR': 0.62, 'ALT': 0.35,
+                    'TIA': 15,
+                    'SEI': 0.59}
+    today_price_list = [['BTC', 62117.81], ['ETH', 3424.5], ['DOT', 3.5], ['LINK', 19.909], ['FIL', 8.302],
+                        ['OP', 3.797], ['SOL', 133.26], ['ENS', 21.44], ['NEAR', 3.987], ['PEOPLE', 0.04369],
+                        ['SNX', 4.355], ['DYDX', 3.444], ['STX', 2.9841], ['DASH', 33.14], ['LDO', 3.434],
+                        ['SAND', 0.6163], ['APE', 1.962], ['MATIC', 1.0211], ['DOGE', 0.1223], ['ICP', 12.803],
+                        ['APT', 11.7371], ['ADA', 0.6779], ['MAGIC', 1.2384], ['MINA', 1.3112], ['MANTA', 2.739],
+                        ['ATOM', 11.395], ['PYTH', 0.6691], ['BLUR', 0.7329], ['ALT', 0.47687], ['TIA', 16.83],
+                        ['SEI', 0.8515]]
+
+    get_data_NXprice(symbol_list, costPricedic, today_price_list)
