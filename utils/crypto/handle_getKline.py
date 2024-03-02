@@ -329,10 +329,11 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
                 if symbol in data:
                     increase = (data[1] - costPricedic[symbol]) / costPricedic[symbol]
                     formatted_percentage = "{:.2%}".format(increase)
-                    price_percentagelist.append([symbol, costPricedic[symbol], data[1], formatted_percentage])
                     if increase < 0:
                         price_percentagelistFlag = True
                         price_percentagelist_negative.append([symbol, costPricedic[symbol], data[1], formatted_percentage])
+                    else:
+                        price_percentagelist.append([symbol, costPricedic[symbol], data[1], formatted_percentage])
     if not price_percentagelist:
         log.info("price_percentagelist is null")
     else:
