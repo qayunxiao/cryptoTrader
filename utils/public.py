@@ -68,7 +68,7 @@ def math_ceil_float(num, digits=2):
         # print("value_f is :{} ,type is :{}".format(value_f,type(value_f)))
         return value_f
     value = math.ceil(float_num * 10 ** digits) / 10 ** digits
-    print("value is :{} ,type is :{}".format(value,type(value)))
+    # print("value is :{} ,type is :{}".format(value,type(value)))
     return value
 
 if __name__ == "__main__":
