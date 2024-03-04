@@ -315,7 +315,7 @@ def get_data_Xprice(symbol_list, costPricedic, X, today_price_list):
     if not price_list:
         log.info("浮盈{}倍的token是空,符合的{} ".format(X - 1, price_list))
     else:
-        log.info("目前浮盈{}倍的token信息:{}".format(X - 1, price_list))
+        # log.info("目前浮盈{}倍的token信息:{}".format(X - 1, price_list))
         send_ding_msgs("目前浮盈{}倍的token信息:{}".format(X - 1, price_list), myself='alvin')
 
 
@@ -342,11 +342,11 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
     else:
         if price_percentagelistFlag:
             log.info("目前持仓币种数量:{} ,token盈亏情况{},浮亏的信息是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative))
-            send_ding_msgs("目前持仓token种类:{} ,浮盈情况{},浮亏是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative))
+            # send_ding_msgs("目前持仓token种类:{} ,浮盈情况{},浮亏是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative))
             send_ding_msgs("目前持仓token种类:{} ,浮盈情况{},浮亏是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative), myself='alvin')
         else:
             log.info("目前持仓币种数量:{} ,token盈亏情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist))
-            send_ding_msgs("目前持仓token种类:{} ,浮盈情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist))
+            # send_ding_msgs("目前持仓token种类:{} ,浮盈情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist))
             send_ding_msgs("目前持仓token数量:{} ,浮盈情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist), myself='alvin')
 
 
@@ -368,7 +368,7 @@ def getCostamount(costPricecountlist,today_price_list):
     for var_name, var_value in frame_vars.items():
         if var_value is costPricecountlist:
             currentAccount=var_name
-            print("currentAccount is :{}".format(currentAccount))
+            # print("currentAccount is :{}".format(currentAccount))
 
     for  item  in  costPricecountlist:
         for  key,  value  in  item.items():
@@ -381,9 +381,6 @@ def getCostamount(costPricecountlist,today_price_list):
                     profit_loss  =  (current_price  -  cost_price)  *  quantity
                     total_cost  =  cost_price  *  quantity
                     # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
-                    # increase = (data[1] - costPricedic[symbol]) / costPricedic[symbol]
-                    # formatted_percentage = "{:.2%}".format(increase)
-                    # new_item  =  {symbol:  [cost_price,  quantity,  current_price,  profit_loss,  total_cost]}
                     increase = (current_price - cost_price) / cost_price
                     formatted_percentage = "{:.2%}".format(increase)
                     new_item  =  {symbol:  {'数量':quantity,'成本价':cost_price, '总成本价':total_cost , '最新价':current_price, '最新持仓价值':quantity*current_price,'盈亏U':profit_loss,'盈亏率':formatted_percentage}}
@@ -392,7 +389,6 @@ def getCostamount(costPricecountlist,today_price_list):
                     allcostykTotal = allcostykTotal + profit_loss
                     allcostTodaytotal = allcostTodaytotal + (quantity * current_price )
                     new_costPricecountlist.append(new_item)
-
     # print("各币情况:{}".format(new_costPricecountlist))
     log.info("各币情况:{}".format(new_costPricecountlist))
     # print(new_costPricecountdicTotal)
