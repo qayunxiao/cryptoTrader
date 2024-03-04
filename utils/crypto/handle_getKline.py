@@ -383,24 +383,26 @@ def getCostamount(costPricecountlist,today_price_list):
                     # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
                     increase = (current_price - cost_price) / cost_price
                     formatted_percentage = "{:.2%}".format(increase)
+                    # log.warning("crypto is:{} ,quantity is :{} ,current_price is :{}".format(crypto,quantity,current_price))
                     new_item  =  {symbol:  {'数量':quantity,'成本价':cost_price, '总成本价':total_cost , '最新价':current_price, '最新持仓价值':quantity*current_price,'盈亏U':profit_loss,'盈亏率':formatted_percentage}}
                     # new_item_total  =  {symbol:  {'盈亏U':profit_loss, '总成本价':total_cost}}
                     allcostTotal = allcostTotal + total_cost
                     allcostykTotal = allcostykTotal + profit_loss
                     allcostTodaytotal = allcostTodaytotal + (quantity * current_price )
+                    # log.info(new_item)
                     new_costPricecountlist.append(new_item)
     # print("各币情况:{}".format(new_costPricecountlist))
-    log.info("各币情况:{}".format(new_costPricecountlist))
+    log.info("当前{}各币情况:{}".format(currentAccount[-8:],new_costPricecountlist))
     # print(new_costPricecountdicTotal)
     allincrease = (allcostTodaytotal - allcostTotal) / allcostTotal
     all_percentage = "{:.2%}".format(allincrease)
     if currentAccount :
-        print("当前{}所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
-        log.info("当前{}所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        print("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        log.info("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
         send_ding_msgs("当前{}所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage),myself='alvin')
     else:
-        print("当前所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
-        log.info("当前所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        print("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        log.info("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
         send_ding_msgs("当前所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage),myself='alvin')
 
 
@@ -448,6 +450,7 @@ if __name__ == '__main__':
 
     # get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
     costPricecountdicxiaohao1 = [ {'BTC':[21000,10]}, {'BTC':[32000,2]}, {'ETH':[4600,32]} ,  {'DOT':[3400,34]}]
+    costPricecountOlStack1 =[{'DOT':[7.06,3925.00 ]},{'CAKE':[5.13,1147.00 ]},{'ATOM':[10.00,480.00 ]},{'ATOM':[9.39,192.59 ]},{'TIA':[15.00,70.00 ]},{'manta':[1.60,500.00 ]},{'manta':[2.60,20.00 ]},{'manta':[2.93,420.00 ]},{'manta':[2.86,1072.00 ]},{'ZKF':[0.01,94730.00 ]},{'ZKF':[0.01,72833.00 ]},{'ZKF ':[8.00,1.00 ]},{'PYTH':[0.40,6180.00 ]},{'PYTH':[80.00,0.50 ]},{'SOL':[90.00,6.00 ]},{'SOL':[100.00,7.00 ]},{'ETH':[2300.00,1.04 ]},{'ETH':[2300.00,1.04 ]},{'ETH':[2300.00,1.09 ]},{'BTC ':[41000.00,0.08 ]}]
 
     # get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
-    getCostamount(costPricecountdicxiaohao1,today_price_list)
+    getCostamount(costPricecountOlStack1,today_price_list)
