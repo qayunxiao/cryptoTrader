@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 import csv
 import datetime
+import inspect
 import os
 import platform
 import random
@@ -14,6 +15,7 @@ import time
 # import ccxt.async_support as ccxt
 from handle_ddmsg import send_ding_msgs
 from handle_log import log
+from public import math_ceil_float
 from utils.handle_path import project_path, data_ccxt_path
 
 
@@ -260,7 +262,7 @@ def get_data_price(symbol_list, price_date, today_price_list):
     price_date = date_to_timestamp(price_date)
     for symbol in symbol_list:
         symbol_usdt = symbol + '/USDT'
-        # print("symbol_usdt is :{}".format(symbol_usdt))
+        print("symbol_usdt is :{}".format(symbol_usdt))
         binance_exchange.fetch_order_book(symbol_usdt)
         orderbook = binance_exchange.fetch_order_book(symbol_usdt)
         # 最高买价
@@ -286,7 +288,7 @@ def get_data_price(symbol_list, price_date, today_price_list):
             price_list.append([symbol, price_today])
             # log.info("price_today type is :{}".format(type(price_today)))
             today_price_list.append([symbol, price_today])
-            log.info("today_price_list is :{}".format(today_price_list))
+            # log.info("today_price_list is :{}".format(today_price_list))
 
     if today_price_list is None:
         send_ding_msgs("日期是:{},获取今日报价是空:{},异常退出！".format(new_price_date, today_price_list), myself='alvin')
@@ -294,6 +296,7 @@ def get_data_price(symbol_list, price_date, today_price_list):
     else:
         # print("日期是:{},价格是:{}".format(new_price_date, price_list))
         # send_ding_msgs("日期是:{},中长线持仓币种与当前价格是:{}".format(new_price_date, price_list))
+        log.info("today_price_list is :{}".format(today_price_list))
         send_ding_msgs("日期是:{},中长线持仓币种与当前价格是:{}".format(new_price_date, price_list), myself='alvin')
 
 
@@ -347,6 +350,66 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
             send_ding_msgs("目前持仓token数量:{} ,浮盈情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist), myself='alvin')
 
 
+def getCostamount(costPricecountlist,today_price_list):
+
+
+    new_costPricecountlist  =  []
+    #总成本
+    allcostTotal = 0
+    #总盈亏u
+    allcostykTotal = 0
+    #今日总价
+    allcostTodaytotal = 0
+    currentAccount = None
+
+    # 获取当前传入参数的名字
+    caller_frame = inspect.currentframe().f_back
+    frame_vars = caller_frame.f_locals
+    for var_name, var_value in frame_vars.items():
+        if var_value is costPricecountlist:
+            currentAccount=var_name
+            print("currentAccount is :{}".format(currentAccount))
+
+    for  item  in  costPricecountlist:
+        for  key,  value  in  item.items():
+            symbol  =  key
+            cost_price  =  value[0]
+            quantity  =  value[1]
+            for  crypto  in  today_price_list:
+                if  crypto[0]  ==  symbol:
+                    current_price  =  crypto[1]
+                    profit_loss  =  (current_price  -  cost_price)  *  quantity
+                    total_cost  =  cost_price  *  quantity
+                    # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
+                    # increase = (data[1] - costPricedic[symbol]) / costPricedic[symbol]
+                    # formatted_percentage = "{:.2%}".format(increase)
+                    # new_item  =  {symbol:  [cost_price,  quantity,  current_price,  profit_loss,  total_cost]}
+                    increase = (current_price - cost_price) / cost_price
+                    formatted_percentage = "{:.2%}".format(increase)
+                    new_item  =  {symbol:  {'数量':quantity,'成本价':cost_price, '总成本价':total_cost , '最新价':current_price, '最新持仓价值':quantity*current_price,'盈亏U':profit_loss,'盈亏率':formatted_percentage}}
+                    # new_item_total  =  {symbol:  {'盈亏U':profit_loss, '总成本价':total_cost}}
+                    allcostTotal = allcostTotal + total_cost
+                    allcostykTotal = allcostykTotal + profit_loss
+                    allcostTodaytotal = allcostTodaytotal + (quantity * current_price )
+                    new_costPricecountlist.append(new_item)
+
+    # print("各币情况:{}".format(new_costPricecountlist))
+    log.info("各币情况:{}".format(new_costPricecountlist))
+    # print(new_costPricecountdicTotal)
+    allincrease = (allcostTodaytotal - allcostTotal) / allcostTotal
+    all_percentage = "{:.2%}".format(allincrease)
+    if currentAccount :
+        print("当前{}所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        log.info("当前{}所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        send_ding_msgs("当前{}所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage),myself='alvin')
+    else:
+        print("当前所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        log.info("当前所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        send_ding_msgs("当前所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage),myself='alvin')
+
+
+
+
 if __name__ == '__main__':
     symbol_list = ['BTC', 'ETH', 'DOT']
     costPricedic = {'BTC': 21328, 'ETH': 1588, 'DOT': 7, 'LINK': 6.5, 'FIL': 4.5, 'OP': 3.22, 'SOL': 64,
@@ -358,12 +421,37 @@ if __name__ == '__main__':
                     'MINA': 0.66, 'MANTA': 2.55, 'ATOM': 7.1, 'PYTH': 0.34, 'BLUR': 0.62, 'ALT': 0.35,
                     'TIA': 15,
                     'SEI': 0.59}
-    today_price_list = [['BTC', 62117.81], ['ETH', 3424.5], ['DOT', 6], ['LINK', 19.909], ['FIL', 8.302],
-                        ['OP', 3.797], ['SOL', 133.26], ['ENS', 21.44], ['NEAR', 3.987], ['PEOPLE', 0.04369],
-                        ['SNX', 4.355], ['DYDX', 3.444], ['STX', 2.9841], ['DASH', 33.14], ['LDO', 3.434],
-                        ['SAND', 0.6163], ['APE', 1.962], ['MATIC', 1.0211], ['DOGE', 0.1223], ['ICP', 12.803],
-                        ['APT', 11.7371], ['ADA', 0.6779], ['MAGIC', 1.2384], ['MINA', 1.3112], ['MANTA', 2.739],
-                        ['ATOM', 11.395], ['PYTH', 0.6691], ['BLUR', 0.7329], ['ALT', 0.47687], ['TIA', 16.83],
-                        ['SEI', 0.8515]]
+    today_price_list = [['BTC', 63370.98], ['ETH', 3467.97],
+                                                                          ['BNB', 414.4], ['BLUR', 0.7023],
+                                                                          ['STORJ', 0.8001], ['STX', 3.0896],
+                                                                          ['GALA', 0.04496], ['PYTH', 0.6668],
+                                                                          ['UNI', 12.344], ['SOL', 128.98],
+                                                                          ['FIL', 10.072], ['SUI', 1.5336],
+                                                                          ['TIA', 15.97], ['CKB', 0.015399],
+                                                                          ['LINK', 20.238], ['AGIX', 0.94582],
+                                                                          ['AUCTION', 28.04], ['ALT', 0.51275],
+                                                                          ['CAKE', 3.294], ['MANTA', 2.822],
+                                                                          ['RIF', 0.242], ['IMX', 3.2768],
+                                                                          ['WLD', 8.059], ['AR', 30.171],
+                                                                          ['XAI', 1.2979], ['BIGTIME', 0.4789],
+                                                                          ['ARB', 1.9912], ['DASH', 37.93],
+                                                                          ['IOTX', 0.06129], ['PYTH', 0.6668],
+                                                                          ['BONK', 3.141e-05], ['BAKE', 0.4488],
+                                                                          ['1000SATS', 0.0007067], ['SEI', 0.7954],
+                                                                          ['OP', 3.924], ['SOL', 128.93],
+                                                                          ['ENS', 21.57], ['NEAR', 4.511],
+                                                                          ['MATIC', 1.0904], ['SNX', 4.428],
+                                                                          ['LDO', 3.311], ['ZEN', 12.28],
+                                                                          ['AAVE', 110.65], ['SAND', 0.673],
+                                                                          ['APE', 2.206], ['ICP', 13.108],
+                                                                          ['PEOPLE', 0.05727], ['DOGE', 0.15602],
+                                                                          ['DYDX', 3.601], ['NEO', 16.01],
+                                                                          ['ADA', 0.7527], ['APT', 11.5614],
+                                                                          ['MAGIC', 1.3488], ['GLMR', 0.5035],
+                                                                          ['MINA', 1.3604], ['ASTR', 0.1611]]
 
-    get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
+    # get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
+    costPricecountdicxiaohao1 = [ {'BTC':[21000,10]}, {'BTC':[32000,2]}, {'ETH':[4600,32]} ,  {'DOT':[3400,34]}]
+
+    # get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
+    getCostamount(costPricecountdicxiaohao1,today_price_list)

@@ -3,8 +3,10 @@
 # @Author  : alvin
 # @File    : public.py
 # @Software: PyCharm
-
+import math
 import os
+from decimal import Decimal, ROUND_HALF_UP
+
 
 def data_dir(data='data', fileName=None):
     '''查找文件的路径'''
@@ -52,7 +54,25 @@ def dict_get(dict, objkey, default):
                     return ret
     return default
 
+def math_ceil_float(num, digits=2):
+    """
+    向上取整
+    如81.521和81.529 都变成 81.53
+    """
+    float_num = float(num)
+    new_str = str(float_num)[:str(float_num).index('.') + digits+2]
+    if new_str[-1] == "0":
+        #小数第3位是0的处理
+        value_d=Decimal(float(num)).quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
+        value_f=float(value_d)
+        # print("value_f is :{} ,type is :{}".format(value_f,type(value_f)))
+        return value_f
+    value = math.ceil(float_num * 10 ** digits) / 10 ** digits
+    print("value is :{} ,type is :{}".format(value,type(value)))
+    return value
+
 if __name__ == "__main__":
     # data_dir_file(fileName="export_cpa_demo.xlsx")
-    a = data_dir_file(fileName="export_cpa_demo.xlsx")
-    print(a)
+    # a = data_dir_file(fileName="export_cpa_demo.xlsx")
+    math_ceil_float("110.43332")
+    # print(a)
