@@ -392,17 +392,17 @@ def getCostamount(costPricecountlist,today_price_list):
                     # log.info(new_item)
                     new_costPricecountlist.append(new_item)
     # print("各币情况:{}".format(new_costPricecountlist))
-    log.info("当前各币情况:{}".format( new_costPricecountlist))
+    send_ding_msgs("当前各币情况:{}".format( new_costPricecountlist))
     # print(new_costPricecountdicTotal)
     allincrease = (allcostTodaytotal - allcostTotal) / allcostTotal
     all_percentage = "{:.2%}".format(allincrease)
     if currentAccount :
-        print("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        # print("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
         log.info("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
         send_ding_msgs("当前{}所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage),myself='alvin')
     else:
         print("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
-        log.info("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        # log.info("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
         send_ding_msgs("当前所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage),myself='alvin')
 
 
