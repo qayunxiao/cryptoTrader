@@ -334,31 +334,33 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
                     formatted_percentage = "{:.2%}".format(increase)
                     if increase < 0:
                         price_percentagelistFlag = True
-                        price_percentagelist_negative.append([symbol, costPricedic[symbol], data[1], formatted_percentage])
+                        price_percentagelist_negative.append(
+                            [symbol, costPricedic[symbol], data[1], formatted_percentage])
                     else:
                         price_percentagelist.append([symbol, costPricedic[symbol], data[1], formatted_percentage])
     if not price_percentagelist:
         log.info("price_percentagelist is null")
     else:
         if price_percentagelistFlag:
-            log.info("目前持仓币种数量:{} ,token盈亏情况{},浮亏的信息是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative))
+            log.info("目前持仓币种数量:{} ,token盈亏情况{},浮亏的信息是:{}".format(len(price_percentagelist), price_percentagelist,
+                                                                 price_percentagelist_negative))
             # send_ding_msgs("目前持仓token种类:{} ,浮盈情况{},浮亏是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative))
-            send_ding_msgs("目前持仓token种类:{} ,浮盈情况{},浮亏是:{}".format(len(price_percentagelist),price_percentagelist,price_percentagelist_negative), myself='alvin')
+            send_ding_msgs("目前持仓token种类:{} ,浮盈情况{},浮亏是:{}".format(len(price_percentagelist), price_percentagelist,
+                                                                  price_percentagelist_negative), myself='alvin')
         else:
-            log.info("目前持仓币种数量:{} ,token盈亏情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist))
+            log.info("目前持仓币种数量:{} ,token盈亏情况{},没有任何浮亏！".format(len(price_percentagelist), price_percentagelist))
             # send_ding_msgs("目前持仓token种类:{} ,浮盈情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist))
-            send_ding_msgs("目前持仓token数量:{} ,浮盈情况{},没有任何浮亏！".format(len(price_percentagelist),price_percentagelist), myself='alvin')
+            send_ding_msgs("目前持仓token数量:{} ,浮盈情况{},没有任何浮亏！".format(len(price_percentagelist), price_percentagelist),
+                           myself='alvin')
 
 
-def getCostamount(costPricecountlist,today_price_list):
-
-
-    new_costPricecountlist  =  []
-    #总成本
+def getCostamount(costPricecountlist, today_price_list):
+    new_costPricecountlist = []
+    # 总成本
     allcostTotal = 0
-    #总盈亏u
+    # 总盈亏u
     allcostykTotal = 0
-    #今日总价
+    # 今日总价
     allcostTodaytotal = 0
     currentAccount = None
 
@@ -367,45 +369,45 @@ def getCostamount(costPricecountlist,today_price_list):
     frame_vars = caller_frame.f_locals
     for var_name, var_value in frame_vars.items():
         if var_value is costPricecountlist:
-            currentAccount=var_name
+            currentAccount = var_name
             # print("currentAccount is :{}".format(currentAccount))
 
-    for  item  in  costPricecountlist:
-        for  key,  value  in  item.items():
-            symbol  =  key
-            cost_price  =  value[0]
-            quantity  =  value[1]
-            for  crypto  in  today_price_list:
-                if  crypto[0]  ==  symbol:
-                    current_price  =  crypto[1]
-                    profit_loss  =  (current_price  -  cost_price)  *  quantity
-                    total_cost  =  cost_price  *  quantity
+    for item in costPricecountlist:
+        for key, value in item.items():
+            symbol = key
+            cost_price = value[0]
+            quantity = value[1]
+            for crypto in today_price_list:
+                if crypto[0] == symbol:
+                    current_price = crypto[1]
+                    profit_loss = (current_price - cost_price) * quantity
+                    total_cost = cost_price * quantity
                     # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
                     increase = (current_price - cost_price) / cost_price
                     formatted_percentage = "{:.2%}".format(increase)
                     # log.warning("crypto is:{} ,quantity is :{} ,current_price is :{}".format(crypto,quantity,current_price))
-                    new_item  =  {symbol:  {'数量':quantity,'成本价':cost_price, '总成本价':total_cost , '最新价':current_price, '最新持仓价值':quantity*current_price,'盈亏U':profit_loss,'盈亏率':formatted_percentage}}
+                    new_item = {symbol: {'数量': quantity, '成本价': cost_price, '总成本价': total_cost, '最新价': current_price,
+                                         '最新持仓价值': quantity * current_price, '盈亏U': profit_loss,
+                                         '盈亏率': formatted_percentage}}
                     # new_item_total  =  {symbol:  {'盈亏U':profit_loss, '总成本价':total_cost}}
                     allcostTotal = allcostTotal + total_cost
                     allcostykTotal = allcostykTotal + profit_loss
-                    allcostTodaytotal = allcostTodaytotal + (quantity * current_price )
+                    allcostTodaytotal = allcostTodaytotal + (quantity * current_price)
                     # log.info(new_item)
                     new_costPricecountlist.append(new_item)
     # print("各币情况:{}".format(new_costPricecountlist))
-    send_ding_msgs("当前各币情况:{}".format( new_costPricecountlist))
+    send_ding_msgs("当前各币情况:{}".format(new_costPricecountlist), myself='alvin')
     # print(new_costPricecountdicTotal)
     allincrease = (allcostTodaytotal - allcostTotal) / allcostTotal
     all_percentage = "{:.2%}".format(allincrease)
-    if currentAccount :
+    if currentAccount:
         # print("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
-        log.info("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
-        send_ding_msgs("当前{}所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage),myself='alvin')
+        # log.info("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:], math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal), math_ceil_float(allcostykTotal), all_percentage))
+        send_ding_msgs("当前{}所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:], math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal), all_percentage),myself='alvin')
     else:
-        print("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        # print("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal), all_percentage))
         # log.info("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
-        send_ding_msgs("当前所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage),myself='alvin')
-
-
+        send_ding_msgs("当前所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal), math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage), myself='alvin')
 
 
 if __name__ == '__main__':
@@ -420,37 +422,43 @@ if __name__ == '__main__':
                     'TIA': 15,
                     'SEI': 0.59}
     today_price_list = [['BTC', 63370.98], ['ETH', 3467.97],
-                                                                          ['BNB', 414.4], ['BLUR', 0.7023],
-                                                                          ['STORJ', 0.8001], ['STX', 3.0896],
-                                                                          ['GALA', 0.04496], ['PYTH', 0.6668],
-                                                                          ['UNI', 12.344], ['SOL', 128.98],
-                                                                          ['FIL', 10.072], ['SUI', 1.5336],
-                                                                          ['TIA', 15.97], ['CKB', 0.015399],
-                                                                          ['LINK', 20.238], ['AGIX', 0.94582],
-                                                                          ['AUCTION', 28.04], ['ALT', 0.51275],
-                                                                          ['CAKE', 3.294], ['MANTA', 2.822],
-                                                                          ['RIF', 0.242], ['IMX', 3.2768],
-                                                                          ['WLD', 8.059], ['AR', 30.171],
-                                                                          ['XAI', 1.2979], ['BIGTIME', 0.4789],
-                                                                          ['ARB', 1.9912], ['DASH', 37.93],
-                                                                          ['IOTX', 0.06129], ['PYTH', 0.6668],
-                                                                          ['BONK', 3.141e-05], ['BAKE', 0.4488],
-                                                                          ['1000SATS', 0.0007067], ['SEI', 0.7954],
-                                                                          ['OP', 3.924], ['SOL', 128.93],
-                                                                          ['ENS', 21.57], ['NEAR', 4.511],
-                                                                          ['MATIC', 1.0904], ['SNX', 4.428],
-                                                                          ['LDO', 3.311], ['ZEN', 12.28],
-                                                                          ['AAVE', 110.65], ['SAND', 0.673],
-                                                                          ['APE', 2.206], ['ICP', 13.108],
-                                                                          ['PEOPLE', 0.05727], ['DOGE', 0.15602],
-                                                                          ['DYDX', 3.601], ['NEO', 16.01],
-                                                                          ['ADA', 0.7527], ['APT', 11.5614],
-                                                                          ['MAGIC', 1.3488], ['GLMR', 0.5035],
-                                                                          ['MINA', 1.3604], ['ASTR', 0.1611]]
+                        ['BNB', 414.4], ['BLUR', 0.7023],
+                        ['STORJ', 0.8001], ['STX', 3.0896],
+                        ['GALA', 0.04496], ['PYTH', 0.6668],
+                        ['UNI', 12.344], ['SOL', 128.98],
+                        ['FIL', 10.072], ['SUI', 1.5336],
+                        ['TIA', 15.97], ['CKB', 0.015399],
+                        ['LINK', 20.238], ['AGIX', 0.94582],
+                        ['AUCTION', 28.04], ['ALT', 0.51275],
+                        ['CAKE', 3.294], ['MANTA', 2.822],
+                        ['RIF', 0.242], ['IMX', 3.2768],
+                        ['WLD', 8.059], ['AR', 30.171],
+                        ['XAI', 1.2979], ['BIGTIME', 0.4789],
+                        ['ARB', 1.9912], ['DASH', 37.93],
+                        ['IOTX', 0.06129], ['PYTH', 0.6668],
+                        ['BONK', 3.141e-05], ['BAKE', 0.4488],
+                        ['1000SATS', 0.0007067], ['SEI', 0.7954],
+                        ['OP', 3.924], ['SOL', 128.93],
+                        ['ENS', 21.57], ['NEAR', 4.511],
+                        ['MATIC', 1.0904], ['SNX', 4.428],
+                        ['LDO', 3.311], ['ZEN', 12.28],
+                        ['AAVE', 110.65], ['SAND', 0.673],
+                        ['APE', 2.206], ['ICP', 13.108],
+                        ['PEOPLE', 0.05727], ['DOGE', 0.15602],
+                        ['DYDX', 3.601], ['NEO', 16.01],
+                        ['ADA', 0.7527], ['APT', 11.5614],
+                        ['MAGIC', 1.3488], ['GLMR', 0.5035],
+                        ['MINA', 1.3604], ['ASTR', 0.1611]]
 
     # get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
-    costPricecountdicxiaohao1 = [ {'BTC':[21000,10]}, {'BTC':[32000,2]}, {'ETH':[4600,32]} ,  {'DOT':[3400,34]}]
-    costPricecountOlStack1 =[{'DOT':[7.06,3925.00 ]},{'CAKE':[5.13,1147.00 ]},{'ATOM':[10.00,480.00 ]},{'ATOM':[9.39,192.59 ]},{'TIA':[15.00,70.00 ]},{'manta':[1.60,500.00 ]},{'manta':[2.60,20.00 ]},{'manta':[2.93,420.00 ]},{'manta':[2.86,1072.00 ]},{'ZKF':[0.01,94730.00 ]},{'ZKF':[0.01,72833.00 ]},{'ZKF ':[8.00,1.00 ]},{'PYTH':[0.40,6180.00 ]},{'PYTH':[80.00,0.50 ]},{'SOL':[90.00,6.00 ]},{'SOL':[100.00,7.00 ]},{'ETH':[2300.00,1.04 ]},{'ETH':[2300.00,1.04 ]},{'ETH':[2300.00,1.09 ]},{'BTC ':[41000.00,0.08 ]}]
+    costPricecountdicxiaohao1 = [{'BTC': [21000, 10]}, {'BTC': [32000, 2]}, {'ETH': [4600, 32]}, {'DOT': [3400, 34]}]
+    costPricecountOlStack1 = [{'DOT': [7.06, 3925.00]}, {'CAKE': [5.13, 1147.00]}, {'ATOM': [10.00, 480.00]},
+                              {'ATOM': [9.39, 192.59]}, {'TIA': [15.00, 70.00]}, {'manta': [1.60, 500.00]},
+                              {'manta': [2.60, 20.00]}, {'manta': [2.93, 420.00]}, {'manta': [2.86, 1072.00]},
+                              {'ZKF': [0.01, 94730.00]}, {'ZKF': [0.01, 72833.00]}, {'ZKF ': [8.00, 1.00]},
+                              {'PYTH': [0.40, 6180.00]}, {'PYTH': [80.00, 0.50]}, {'SOL': [90.00, 6.00]},
+                              {'SOL': [100.00, 7.00]}, {'ETH': [2300.00, 1.04]}, {'ETH': [2300.00, 1.04]},
+                              {'ETH': [2300.00, 1.09]}, {'BTC ': [41000.00, 0.08]}]
 
     # get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
-    getCostamount(costPricecountOlStack1,today_price_list)
+    getCostamount(costPricecountOlStack1, today_price_list)
