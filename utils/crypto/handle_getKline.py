@@ -396,6 +396,7 @@ def getCostamount(costPricecountlist, today_price_list):
                     new_costPricecountlist.append(new_item)
     # print("各币情况:{}".format(new_costPricecountlist))
     send_ding_msgs("当前各币情况:{}".format(new_costPricecountlist), myself='alvin')
+    time.sleep(3)
     # print(new_costPricecountdicTotal)
     allincrease = (allcostTodaytotal - allcostTotal) / allcostTotal
     all_percentage = "{:.2%}".format(allincrease)
