@@ -386,8 +386,8 @@ def getCostamount(costPricecountlist, today_price_list):
                     increase = (current_price - cost_price) / cost_price
                     formatted_percentage = "{:.2%}".format(increase)
                     # log.warning("crypto is:{} ,quantity is :{} ,current_price is :{}".format(crypto,quantity,current_price))
-                    new_item = {symbol: {'数量': quantity, '成本价': cost_price, '总成本价': total_cost, '最新价': current_price,
-                                         '最新持仓价值': quantity * current_price, '盈亏U': profit_loss,'盈亏率': formatted_percentage}}
+                    new_item = {symbol: {'数量': math_ceil_float(quantity), '成本价': math_ceil_float(cost_price), '总成本价': math_ceil_float(total_cost), '最新价': (current_price),
+                                         '最新持仓价值': math_ceil_float(quantity * current_price), '盈亏U': math_ceil_float(profit_loss),'盈亏率': formatted_percentage}}
                     # new_item_total  =  {symbol:  {'盈亏U':profit_loss, '总成本价':total_cost}}
                     allcostTotal = allcostTotal + total_cost
                     allcostykTotal = allcostykTotal + profit_loss
