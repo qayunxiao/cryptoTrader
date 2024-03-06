@@ -58,16 +58,16 @@ class run_priceX():
     def run_get_current_Xprice(self):
         print("run_get_current_Xprice is running....")
         get_data_pricepercentage(self.symbol_price, self.costPricedic, self.today_price_list)
-        X_List = [4,5,6,7,8,9]
+        X_List = [6,7,8,9]
         for x in X_List:
             get_data_Xprice(self.symbol_price, self.costPricedic, x, self.today_price_list)
         print("run_get_current_Xprice is end !")
 
     def run_get_current_earnings(self):
         print("run get_current_earnings is running....")
-        getCostamount(self.costPricecountxiaohao1, self.today_price_list)
-        getCostamount(self.costPricecountxiaohao2, self.today_price_list)
-        getCostamount(self.costPricecountOlStack1, self.today_price_list)
+        getCostamount(self.costPricecountxiaohao1, self.today_price_list ,"xiaohao1")
+        getCostamount(self.costPricecountxiaohao2, self.today_price_list,"xiaohao2")
+        getCostamount(self.costPricecountOlStack1, self.today_price_list,"Stack")
         print("run get_current_earnings is end !")
 
 
