@@ -410,54 +410,55 @@ def getCostamount(costPricecountlist, today_price_list):
 
 
 if __name__ == '__main__':
-    symbol_list = ['BTC', 'ETH', 'DOT']
-    costPricedic = {'BTC': 21328, 'ETH': 1588, 'DOT': 7, 'LINK': 6.5, 'FIL': 4.5, 'OP': 3.22, 'SOL': 64,
-                    'ENS': 20,
-                    'NEAR': 1.1, 'PEOPLE': 0.0285, 'SNX': 3.8, 'DYDX': 1.96,
-                    'STX': 0.49, 'DASH': 30, 'LDO': 3.05, 'SAND': 0.7, 'APE': 1.28, 'MATIC': 0.78,
-                    'DOGE': 0.0916,
-                    'ICP': 3.52, 'APT': 8.7, 'ADA': 0.26, 'MAGIC': 1.24,
-                    'MINA': 0.66, 'MANTA': 2.55, 'ATOM': 7.1, 'PYTH': 0.34, 'BLUR': 0.62, 'ALT': 0.35,
-                    'TIA': 15,
-                    'SEI': 0.59}
-    today_price_list = [['BTC', 63370.98], ['ETH', 3467.97],
-                        ['BNB', 414.4], ['BLUR', 0.7023],
-                        ['STORJ', 0.8001], ['STX', 3.0896],
-                        ['GALA', 0.04496], ['PYTH', 0.6668],
-                        ['UNI', 12.344], ['SOL', 128.98],
-                        ['FIL', 10.072], ['SUI', 1.5336],
-                        ['TIA', 15.97], ['CKB', 0.015399],
-                        ['LINK', 20.238], ['AGIX', 0.94582],
-                        ['AUCTION', 28.04], ['ALT', 0.51275],
-                        ['CAKE', 3.294], ['MANTA', 2.822],
-                        ['RIF', 0.242], ['IMX', 3.2768],
-                        ['WLD', 8.059], ['AR', 30.171],
-                        ['XAI', 1.2979], ['BIGTIME', 0.4789],
-                        ['ARB', 1.9912], ['DASH', 37.93],
-                        ['IOTX', 0.06129], ['PYTH', 0.6668],
-                        ['BONK', 3.141e-05], ['BAKE', 0.4488],
-                        ['1000SATS', 0.0007067], ['SEI', 0.7954],
-                        ['OP', 3.924], ['SOL', 128.93],
-                        ['ENS', 21.57], ['NEAR', 4.511],
-                        ['MATIC', 1.0904], ['SNX', 4.428],
-                        ['LDO', 3.311], ['ZEN', 12.28],
-                        ['AAVE', 110.65], ['SAND', 0.673],
-                        ['APE', 2.206], ['ICP', 13.108],
-                        ['PEOPLE', 0.05727], ['DOGE', 0.15602],
-                        ['DYDX', 3.601], ['NEO', 16.01],
-                        ['ADA', 0.7527], ['APT', 11.5614],
-                        ['MAGIC', 1.3488], ['GLMR', 0.5035],
-                        ['MINA', 1.3604], ['ASTR', 0.1611]]
+    pass
+    # symbol_list = ['BTC', 'ETH', 'DOT']
+    # costPricedic = {'BTC': 21328, 'ETH': 1588, 'DOT': 7, 'LINK': 6.5, 'FIL': 4.5, 'OP': 3.22, 'SOL': 64,
+    #                 'ENS': 20,
+    #                 'NEAR': 1.1, 'PEOPLE': 0.0285, 'SNX': 3.8, 'DYDX': 1.96,
+    #                 'STX': 0.49, 'DASH': 30, 'LDO': 3.05, 'SAND': 0.7, 'APE': 1.28, 'MATIC': 0.78,
+    #                 'DOGE': 0.0916,
+    #                 'ICP': 3.52, 'APT': 8.7, 'ADA': 0.26, 'MAGIC': 1.24,
+    #                 'MINA': 0.66, 'MANTA': 2.55, 'ATOM': 7.1, 'PYTH': 0.34, 'BLUR': 0.62, 'ALT': 0.35,
+    #                 'TIA': 15,
+    #                 'SEI': 0.59}
+    # today_price_list = [['BTC', 63370.98], ['ETH', 3467.97],
+    #                     ['BNB', 414.4], ['BLUR', 0.7023],
+    #                     ['STORJ', 0.8001], ['STX', 3.0896],
+    #                     ['GALA', 0.04496], ['PYTH', 0.6668],
+    #                     ['UNI', 12.344], ['SOL', 128.98],
+    #                     ['FIL', 10.072], ['SUI', 1.5336],
+    #                     ['TIA', 15.97], ['CKB', 0.015399],
+    #                     ['LINK', 20.238], ['AGIX', 0.94582],
+    #                     ['AUCTION', 28.04], ['ALT', 0.51275],
+    #                     ['CAKE', 3.294], ['MANTA', 2.822],
+    #                     ['RIF', 0.242], ['IMX', 3.2768],
+    #                     ['WLD', 8.059], ['AR', 30.171],
+    #                     ['XAI', 1.2979], ['BIGTIME', 0.4789],
+    #                     ['ARB', 1.9912], ['DASH', 37.93],
+    #                     ['IOTX', 0.06129], ['PYTH', 0.6668],
+    #                     ['BONK', 3.141e-05], ['BAKE', 0.4488],
+    #                     ['1000SATS', 0.0007067], ['SEI', 0.7954],
+    #                     ['OP', 3.924], ['SOL', 128.93],
+    #                     ['ENS', 21.57], ['NEAR', 4.511],
+    #                     ['MATIC', 1.0904], ['SNX', 4.428],
+    #                     ['LDO', 3.311], ['ZEN', 12.28],
+    #                     ['AAVE', 110.65], ['SAND', 0.673],
+    #                     ['APE', 2.206], ['ICP', 13.108],
+    #                     ['PEOPLE', 0.05727], ['DOGE', 0.15602],
+    #                     ['DYDX', 3.601], ['NEO', 16.01],
+    #                     ['ADA', 0.7527], ['APT', 11.5614],
+    #                     ['MAGIC', 1.3488], ['GLMR', 0.5035],
+    #                     ['MINA', 1.3604], ['ASTR', 0.1611]]
 
     # get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
-    costPricecountdicxiaohao1 = [{'BTC': [21000, 10]}, {'BTC': [32000, 2]}, {'ETH': [4600, 32]}, {'DOT': [3400, 34]}]
-    costPricecountOlStack1 = [{'DOT': [7.06, 3925.00]}, {'CAKE': [5.13, 1147.00]}, {'ATOM': [10.00, 480.00]},
-                              {'ATOM': [9.39, 192.59]}, {'TIA': [15.00, 70.00]}, {'manta': [1.60, 500.00]},
-                              {'manta': [2.60, 20.00]}, {'manta': [2.93, 420.00]}, {'manta': [2.86, 1072.00]},
-                              {'ZKF': [0.01, 94730.00]}, {'ZKF': [0.01, 72833.00]}, {'ZKF ': [8.00, 1.00]},
-                              {'PYTH': [0.40, 6180.00]}, {'PYTH': [80.00, 0.50]}, {'SOL': [90.00, 6.00]},
-                              {'SOL': [100.00, 7.00]}, {'ETH': [2300.00, 1.04]}, {'ETH': [2300.00, 1.04]},
-                              {'ETH': [2300.00, 1.09]}, {'BTC ': [41000.00, 0.08]}]
-
-    # get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
-    getCostamount(costPricecountOlStack1, today_price_list)
+    # costPricecountdicxiaohao1 = [{'BTC': [21000, 10]}, {'BTC': [32000, 2]}, {'ETH': [4600, 32]}, {'DOT': [3400, 34]}]
+    # costPricecountOlStack1 = [{'DOT': [7.06, 3925.00]}, {'CAKE': [5.13, 1147.00]}, {'ATOM': [10.00, 480.00]},
+    #                           {'ATOM': [9.39, 192.59]}, {'TIA': [15.00, 70.00]}, {'manta': [1.60, 500.00]},
+    #                           {'manta': [2.60, 20.00]}, {'manta': [2.93, 420.00]}, {'manta': [2.86, 1072.00]},
+    #                           {'ZKF': [0.01, 94730.00]}, {'ZKF': [0.01, 72833.00]}, {'ZKF ': [8.00, 1.00]},
+    #                           {'PYTH': [0.40, 6180.00]}, {'PYTH': [80.00, 0.50]}, {'SOL': [90.00, 6.00]},
+    #                           {'SOL': [100.00, 7.00]}, {'ETH': [2300.00, 1.04]}, {'ETH': [2300.00, 1.04]},
+    #                           {'ETH': [2300.00, 1.09]}, {'BTC ': [41000.00, 0.08]}]
+    #
+    # # get_data_pricepercentage(symbol_list, costPricedic, today_price_list)
+    # getCostamount(costPricecountOlStack1, today_price_list)
