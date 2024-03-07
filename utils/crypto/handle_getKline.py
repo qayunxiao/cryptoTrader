@@ -352,7 +352,8 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
 
 
 def getCostamount(costPricecountlist,today_price_list,account_alias):
-    new_costPricecountlist = []
+    new_costPricecountlist_profit = []
+    new_costPricecountlist_loss = []
     # 总成本
     allcostTotal = 0
     # 总盈亏u
@@ -382,17 +383,22 @@ def getCostamount(costPricecountlist,today_price_list,account_alias):
                     # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
                     increase = (current_price - cost_price) / cost_price
                     formatted_percentage = "{:.2%}".format(increase)
+
+                    allcostTotal = allcostTotal + total_cost
+                    allcostykTotal = allcostykTotal + profit_loss
+                    allcostTodaytotal = allcostTodaytotal + (quantity * current_price)
                     # log.warning("crypto is:{} ,quantity is :{} ,current_price is :{}".format(crypto,quantity,current_price))
                     new_item = {symbol: {'数量': math_ceil_float(quantity), '成本价': math_ceil_float(cost_price), '总成本价': math_ceil_float(total_cost), '最新价': (current_price),
                                          '最新持仓价值': math_ceil_float(quantity * current_price), '盈亏U': math_ceil_float(profit_loss),'盈亏率': formatted_percentage}}
                     # new_item_total  =  {symbol:  {'盈亏U':profit_loss, '总成本价':total_cost}}
-                    allcostTotal = allcostTotal + total_cost
-                    allcostykTotal = allcostykTotal + profit_loss
-                    allcostTodaytotal = allcostTodaytotal + (quantity * current_price)
                     # log.info(new_item)
-                    new_costPricecountlist.append(new_item)
+                    if increase > 0:
+                        new_costPricecountlist_profit.append(new_item)
+                    else:
+                        new_costPricecountlist_loss.append(new_item)
+
     # print("各币情况:{}".format(new_costPricecountlist))
-    send_ding_msgs("账户:{},当前各币情况:{}".format(currentAccount,new_costPricecountlist), myself='alvin')
+    send_ding_msgs("账户:{},浮赢的:{},浮亏的:{}".format(currentAccount,new_costPricecountlist_profit,new_costPricecountlist_loss), myself='alvin')
     time.sleep(3)
     # print(new_costPricecountdicTotal)
     allincrease = (allcostTodaytotal - allcostTotal) / allcostTotal
