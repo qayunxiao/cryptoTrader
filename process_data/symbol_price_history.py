@@ -91,6 +91,11 @@ def get_history_data(symbol_list):
         send_ding_msgs("综合逃顶判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
         send_ding_msgs("综合逃顶判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']), myself='alvin')
 
+    # 逃顶判断
+    if fear_value[0] > 92 or resapi_ahr_data_today["ahr999"] > 1.53:
+        # log.error("恐慌和ahr指标综合,当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        # send_ding_msgs("综合逃顶判断:当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        send_ding_msgs("综合逃顶判断-中长线:当前恐慌指数:{},当前ahr999值:{} 考虑分批减仓".format(fear_value[0], resapi_ahr_data_today['ahr999']), myself='alvin')
     try:
 
         # symbol_list =  ['BTC' ]
