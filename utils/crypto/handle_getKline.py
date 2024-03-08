@@ -351,7 +351,7 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
             send_ding_msgs("目前持仓token数量:{} ,浮盈情况{},没有任何浮亏！".format(len(price_percentagelist), price_percentagelist),myself='alvin')
 
 
-def getCostamount(costPricecountlist,today_price_list,account_alias):
+def getCostamount(costPricecountlist,today_price_list,account_alias,sumTotalAccountCost,sumTotalAccountMarketvalue):
     new_costPricecountlist_profit = []
     new_costPricecountlist_loss = []
     # 总成本
@@ -378,6 +378,7 @@ def getCostamount(costPricecountlist,today_price_list,account_alias):
             for crypto in today_price_list:
                 if crypto[0] == symbol:
                     current_price = crypto[1]
+                    #（ 最新价格-成本价 ）* 数量
                     profit_loss = (current_price - cost_price) * quantity
                     total_cost = cost_price * quantity
                     # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
@@ -403,14 +404,22 @@ def getCostamount(costPricecountlist,today_price_list,account_alias):
     # print(new_costPricecountdicTotal)
     allincrease = (allcostTodaytotal - allcostTotal) / allcostTotal
     all_percentage = "{:.2%}".format(allincrease)
+
+    # 所以账户持仓成本汇总
+    sumTotalAccountCost = sumTotalAccountCost + math_ceil_float(allcostTotal)
+    # 所以账户持仓市值汇总
+    sumTotalAccountMarketvalue = sumTotalAccountMarketvalue + math_ceil_float(allcostTodaytotal)
+
     if currentAccount:
         # print("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:],math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
-        # log.info("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:], math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal), math_ceil_float(allcostykTotal), all_percentage))
+        log.info("当前{}所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount[-8:], math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal), math_ceil_float(allcostykTotal), all_percentage))
         send_ding_msgs("当前账户{}所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(currentAccount, math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal), all_percentage),myself='alvin')
+        return sumTotalAccountCost,sumTotalAccountMarketvalue
     else:
         # print("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal), all_percentage))
-        # log.info("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
+        log.info("当前所有token总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal),math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage))
         send_ding_msgs("当前账户所有bi总成本U:{},今日持仓价值U:{},总盈亏U：{},总盈亏率:{}".format(math_ceil_float(allcostTotal), math_ceil_float(allcostTodaytotal),math_ceil_float(allcostykTotal),all_percentage), myself='alvin')
+        return sumTotalAccountCost,sumTotalAccountMarketvalue
 
 
 if __name__ == '__main__':

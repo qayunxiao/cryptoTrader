@@ -8,6 +8,8 @@ import datetime
 import os
 import sys
 
+from public import math_ceil_float
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 utils = os.path.join(BASE_DIR, 'utils')
 process_data = os.path.join(BASE_DIR, 'process_data')
@@ -33,7 +35,8 @@ class run_priceX():
         self.symbol_price =['BTC','ETH','BNB', 'BLUR', 'STORJ', 'STX', 'GALA', 'PYTH', 'UNI', 'SOL', 'FIL', 'SUI', 'TIA', 'CKB', 'LINK', 'AGIX', 'AUCTION', 'ALT', 'CAKE', 'MANTA', 'RIF', 'IMX', 'WLD', 'AR', 'XAI', 'BIGTIME', 'ARB', 'DASH', 'IOTX' , 'PYTH', 'BONK', 'BAKE','1000SATS', 'SEI' , 'OP', 'SOL', 'ENS', 'NEAR', 'MATIC', 'SNX', 'LDO', 'ZEN', 'AAVE', 'SAND', 'APE', 'ICP', 'PEOPLE', 'DOGE', 'DYDX', 'NEO', 'ADA', 'APT', 'MAGIC', 'GLMR', 'MINA','ASTR']
         # 'GPT', 'ZETA', 'LOOKS', 'HONEY'
         # self.symbol_price =['BTC','ETH','BNB', 'BLUR', 'STORJ', 'STX', 'GALA', 'PYTH', 'UNI', 'SOL', 'FIL', 'SUI', 'TIA', 'CKB', 'LINK', 'AGIX', 'AUCTION', 'ALT', 'CAKE', 'MANTA', 'RIF', 'IMX', 'WLD', 'AR', 'XAI', 'BIGTIME', 'GPT', 'ZETA', 'LOOKS', 'HONEY', 'ARB', 'DASH', 'IOTX', 'ZKF', 'PYTH', 'BONK', 'BAKE', 'MUBI', 'SATS', 'ONDO', 'SEI', 'HNT', 'CHAX', 'OP', 'SOL', 'ENS', 'NEAR', 'MATIC', 'SNX', 'LDO', 'ZEN', 'AAVE', 'SAND', 'APE', 'ICP', 'PEOPLE', 'DOGE', 'DYDX', 'NEO', 'ADA', 'APT', 'MAGIC', 'GLMR', 'MINA', 'OKB', 'ASTR', 'CSPR', 'ZBC']
-
+        self.sumTotalAccountCost = 0
+        self.sumTotalAccountMarketvalue = 0
         # 持仓小号1
         self.costPricedic = {'BTC': 21328, 'ETH': 1588, 'DOT': 7, 'LINK': 6.5, 'FIL': 4.5, 'OP': 3.22, 'SOL': 64,
                              'ENS': 20,'NEAR': 1.1, 'PEOPLE': 0.0285, 'SNX': 3.8, 'DYDX': 1.96,
@@ -43,7 +46,7 @@ class run_priceX():
 
         self.costPricecountxiaohao1 = [{'BTC':[24920,0.5]},{'BTC':[25800,0.9]},{'BTC':[16000,0.15]},{'BTC':[15800,0.6]},{'BTC':[16800,0.76]},{'BTC':[21999,0.5]},{'BTC':[21700,0.4]},{'BTC':[21550,0.4]},{'BTC':[23450,0.4]},{'BTC':[23618,0.4]},{'BTC':[21200,0.5]},{'BTC':[20370,0.16655]},{'BTC':[21518,0.1]},{'BTC':[19955,0.3152]},{'ETH':[1484,10]},{'ETH':[1588,10]},{'ETH':[1975,2.7]},{'ETH':[2477,6]},{'ETH':[2500,4]},{'FIL':[4.4,500]},{'FIL':[3.6,350]},{'FIL':[5.18,550]},{'LINK':[6,500]},{'LINK':[15,50]},{'OP':[3.22,1547]},{'SOL':[20.2,10]},{'SOL':[64,30]},{'ENS':[20,182]},{'NEAR':[1.167,1158]},{'STX':[0.49,299]},{'STX':[1.4,565]},{'MATIC':[0.96,1041]},{'MATIC':[0.78,300]},{'SNX':[3.8,324]},{'SNX':[3.6,375]},{'SNX':[3.55,800]},{'LDO':[3.05,605]},{'LDO':[3.32,300]},{'DASH':[30,76]},{'ZEN':[11.1,186]},{'AAVE':[94,20]},{'SAND':[0.3095,646]},{'SAND':[0.7,3000]},{'APE':[1.62,1000]},{'APE':[1.28,1075]},{'ICP':[3.54,62]},{'PEOPLE':[0.0285,100000]},{'DOGE':[0.0916,10917]},{'DYDX':[1.96,250]},{'DYDX':[3,500]},{'NEO':[7.6,50]},{'ADA':[0.26,1024]},{'APT':[8.7,60]},{'APT':[10.4,300]},{'MAGIC':[1.24,402]},{'BLUR':[0.62,1614]},{'ALT':[0.35,3000]},{'SEI':[0.59,1522]},{'STORJ':[0.7,1428]},{'GLMR':[0.23,182]},{'MINA':[0.66,164]}]
         self.costPricecountxiaohao2 = [{'BNB':[306,7]},{'BNB':[280,10]},{'BNB':[366,8]},{'BNB':[377,6]},{'BLUR':[0.65,6000]},{'STORJ':[0.71,4633]},{'STX':[2.95,677]},{'STX':[2.85,500]},{'GALA':[0.0275,72727]},{'PYTH':[0.53,2270]},{'PYTH':[0.58,2472]},{'UNI':[10.9,222]},{'SOL':[108,10]},{'SOL':[88,9]},{'FIL':[6.4,200]},{'TIA':[16.8,114]},{'CKB':[0.0155,109268]},{'AGIX':[0.66,1515]},{'ALT':[0.479,2044]},{'MANTA':[2.9,251]},{'RIF':[0.223,4484]}]
-        self.costPricecountOlStack1 =[{'DOT':[7.06,3925.00]},{'CAKE':[5.13,1147.00]},{'ATOM':[10.00,480.00]},{'ATOM':[9.39,192.59]},{'TIA':[15.00,70.00]},{'MANTA':[1.60,500.00]},{'MANTA':[2.60,20.00]},{'MANTA':[2.93,420.00]},{'MANTA':[2.86,1072.00]},{'ZKF':[0.01,94730.00]},{'ZKF':[0.01,72833.00]},{'PYTH':[0.40,6180.00]},{'PYTH':[80,0.50]},{'SOL':[90.00,6.00]},{'SOL':[100.00,7.00]},{'ETH':[2300.00,1.04]},{'ETH':[2300.00,1.04]},{'ETH':[2300.00,1.09]},{'BTC ':[41000.00,0.08]}]
+        self.costPricecountOlStack1 =[{'DOT':[7.06,3925.00]},{'CAKE':[5.13,1147.00]},{'ATOM':[10.00,480.00]},{'ATOM':[9.39,192.59]},{'TIA':[15.00,70.00]},{'MANTA':[1.60,500.00]},{'MANTA':[2.60,20.00]},{'MANTA':[2.93,420.00]},{'MANTA':[2.86,1072.00]},{'ZKF':[0.01,94730.00]},{'ZKF':[0.01,72833.00]},{'PYTH':[0.40,6180.00]},{'PYTH':[0.50,80]},{'SOL':[90.00,6.00]},{'SOL':[100.00,7.00]},{'ETH':[2300.00,1.04]},{'ETH':[2300.00,1.04]},{'ETH':[2300.00,1.09]},{'BTC ':[41000.00,0.08]}]
 
     def run_get_history_data(self):
         get_history_data(self.symbol_price_history)
@@ -65,9 +68,17 @@ class run_priceX():
 
     def run_get_current_earnings(self):
         print("run get_current_earnings is running....")
-        getCostamount(self.costPricecountxiaohao1, self.today_price_list ,"xiaohao1")
-        getCostamount(self.costPricecountxiaohao2, self.today_price_list,"xiaohao2")
-        getCostamount(self.costPricecountOlStack1, self.today_price_list,"Stack")
+        AccountCost1,AccountMarketvalue1 = getCostamount(self.costPricecountxiaohao1, self.today_price_list ,"xiaohao1",self.sumTotalAccountCost,self.sumTotalAccountMarketvalue)
+        AccountCost2,AccountMarketvalue2 = getCostamount(self.costPricecountxiaohao2, self.today_price_list,"xiaohao2",AccountCost1,AccountMarketvalue1)
+        AccountCost3,AccountMarketvalue3 = getCostamount(self.costPricecountOlStack1, self.today_price_list,"Stack",AccountCost2,AccountMarketvalue2)
+        # print("self.sumTotalAccountCost1 is :{} , self.sumTotalAccountMarketvalue1 is : {}".format(AccountCost1,AccountMarketvalue1))
+        # print("self.sumTotalAccountCost2 is :{} , self.sumTotalAccountMarketvalue2 is : {}".format(AccountCost2,AccountMarketvalue2))
+        # print("self.sumTotalAccountCost is :{} , self.sumTotalAccountMarketvalue is : {}".format(AccountCost3,AccountMarketvalue3))
+        # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
+        increase_allAccount = (AccountMarketvalue3 - AccountCost3) / AccountCost3
+        percentage_allAccount = "{:.2%}".format(increase_allAccount)
+        print("所有账户汇总成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{}".format(math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount))
+        send_ding_msgs("所有账户汇总成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{}".format(math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount,myself='alvin'))
         print("run get_current_earnings is end !")
 
 
