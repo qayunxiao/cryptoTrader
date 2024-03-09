@@ -7,7 +7,7 @@
 import datetime
 import os
 import sys
-
+import time
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 utils = os.path.join(BASE_DIR, 'utils')
@@ -76,6 +76,7 @@ class run_priceX():
         # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
         increase_allAccount = (AccountMarketvalue3 - AccountCost3) / AccountCost3
         percentage_allAccount = "{:.2%}".format(increase_allAccount)
+        time.sleep(30)
         print("所有账户汇总成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{}".format(math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount))
         send_ding_msgs("所有账户汇总成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{}".format(math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount,myself='alvin'))
         print("run get_current_earnings is end !")
