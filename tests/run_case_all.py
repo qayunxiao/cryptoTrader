@@ -78,7 +78,7 @@ class run_priceX():
         percentage_allAccount = "{:.2%}".format(increase_allAccount)
         time.sleep(30)
         print("所有账户汇总成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{}".format(math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount))
-        send_ding_msgs("所有账户汇总成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{}".format(math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount,myself='alvin'))
+        send_ding_msgs("所有账户汇总成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{}".format(math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount),myself='alvin')
         print("run get_current_earnings is end !")
 
 
