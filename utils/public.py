@@ -57,7 +57,7 @@ def dict_get(dict, objkey, default):
 def math_ceil_float(num, digits=2):
     """
     向上取整
-    如81.521和81.529 都变成 81.53
+    如81.521和81.529 都变成 81.53 qa
     """
     float_num = float(num)
     new_str = str(float_num)[:str(float_num).index('.') + digits+2]
