@@ -8,7 +8,6 @@ import datetime
 import os
 import sys
 
-from public import math_ceil_float
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 utils = os.path.join(BASE_DIR, 'utils')
@@ -18,7 +17,7 @@ sys.path.append(utils)
 sys.path.append(process_data)
 # print("utils is :{}".format(utils))
 # print("process_data is :{}".format(process_data))
-
+from public import math_ceil_float
 from utils.handle_ddmsg import send_ding_msgs
 from utils.crypto.handle_getKline import get_data_Xprice, get_data_price, get_data_pricepercentage, getCostamount
 from process_data.symbol_price_history import get_history_data
