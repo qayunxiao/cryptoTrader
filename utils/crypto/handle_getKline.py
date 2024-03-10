@@ -351,7 +351,7 @@ def get_data_pricepercentage(symbol_list, costPricedic, today_price_list):
             send_ding_msgs("目前持仓token数量:{} ,浮盈情况{},没有任何浮亏！".format(len(price_percentagelist), price_percentagelist),myself='alvin')
 
 
-def getCostamount(costPricecountlist,today_price_list,account_alias,sumTotalAccountCost,sumTotalAccountMarketvalue):
+def getCostamount(costPricecountlist,today_price_list,account_alias,sumTotalAccountCost,sumTotalAccountMarketvalue,sumTotaltokennum):
     new_costPricecountlist_profit = []
     new_costPricecountlist_loss = []
     # 总成本
@@ -393,12 +393,13 @@ def getCostamount(costPricecountlist,today_price_list,account_alias,sumTotalAcco
                                          '最新持仓价值': math_ceil_float(quantity * current_price), '盈亏U': math_ceil_float(profit_loss),'盈亏率': formatted_percentage}}
                     # new_item_total  =  {symbol:  {'盈亏U':profit_loss, '总成本价':total_cost}}
                     # log.info(new_item)
+                    sumTotaltokennum.append(symbol)
                     if increase > 0:
                         new_costPricecountlist_profit.append(new_item)
                     else:
                         new_costPricecountlist_loss.append(new_item)
 
-    # print("各币情况:{}".format(new_costPricecountlist))
+    log.warning("账户:{},浮赢的:{},浮亏的:{}".format(currentAccount,new_costPricecountlist_profit,new_costPricecountlist_loss))
     send_ding_msgs("账户:{},浮赢的:{},浮亏的:{}".format(currentAccount,new_costPricecountlist_profit,new_costPricecountlist_loss), myself='alvin')
     time.sleep(3)
     # print(new_costPricecountdicTotal)
