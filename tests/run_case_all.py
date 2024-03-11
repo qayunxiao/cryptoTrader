@@ -37,6 +37,8 @@ class run_priceX():
         # self.symbol_price =['BTC','ETH','BNB', 'BLUR', 'STORJ', 'STX', 'GALA', 'PYTH', 'UNI', 'SOL', 'FIL', 'SUI', 'TIA', 'CKB', 'LINK', 'AGIX', 'AUCTION', 'ALT', 'CAKE', 'MANTA', 'RIF', 'IMX', 'WLD', 'AR', 'XAI', 'BIGTIME', 'GPT', 'ZETA', 'LOOKS', 'HONEY', 'ARB', 'DASH', 'IOTX', 'ZKF', 'PYTH', 'BONK', 'BAKE', 'MUBI', 'SATS', 'ONDO', 'SEI', 'HNT', 'CHAX', 'OP', 'SOL', 'ENS', 'NEAR', 'MATIC', 'SNX', 'LDO', 'ZEN', 'AAVE', 'SAND', 'APE', 'ICP', 'PEOPLE', 'DOGE', 'DYDX', 'NEO', 'ADA', 'APT', 'MAGIC', 'GLMR', 'MINA', 'OKB', 'ASTR', 'CSPR', 'ZBC']
         self.sumTotalAccountCost = 0
         self.sumTotalAccountMarketvalue = 0
+        self.sumAccountFloatinglossToken = [] #所有账户浮亏列表
+
         # 持仓小号1
         self.costPricedic = {'BTC': 21328, 'ETH': 1588, 'DOT': 7, 'LINK': 6.5, 'FIL': 4.5, 'OP': 3.22, 'SOL': 64,
                              'ENS': 20,'NEAR': 1.1, 'PEOPLE': 0.0285, 'SNX': 3.8, 'DYDX': 1.96,
@@ -68,18 +70,16 @@ class run_priceX():
 
     def run_get_current_earnings(self):
         print("run get_current_earnings is running....")
-        AccountCost1,AccountMarketvalue1 = getCostamount(self.costPricecountxiaohao1, self.today_price_list ,"xiaohao1",self.sumTotalAccountCost,self.sumTotalAccountMarketvalue,self.sumTotaltokennum)
-        AccountCost2,AccountMarketvalue2 = getCostamount(self.costPricecountxiaohao2, self.today_price_list,"xiaohao2",AccountCost1,AccountMarketvalue1,self.sumTotaltokennum)
-        AccountCost3,AccountMarketvalue3 = getCostamount(self.costPricecountOlStack1, self.today_price_list,"Stack",AccountCost2,AccountMarketvalue2,self.sumTotaltokennum)
-        # print("self.sumTotalAccountCost1 is :{} , self.sumTotalAccountMarketvalue1 is : {}".format(AccountCost1,AccountMarketvalue1))
-        # print("self.sumTotalAccountCost2 is :{} , self.sumTotalAccountMarketvalue2 is : {}".format(AccountCost2,AccountMarketvalue2))
-        # print("self.sumTotalAccountCost is :{} , self.sumTotalAccountMarketvalue is : {}".format(AccountCost3,AccountMarketvalue3))
+        AccountCost1,AccountMarketvalue1,AccountFloatingloss1 = getCostamount(self.costPricecountxiaohao1, self.today_price_list ,"xiaohao1",self.sumTotalAccountCost,self.sumTotalAccountMarketvalue,self.sumTotaltokennum)
+        AccountCost2,AccountMarketvalue2,AccountFloatingloss2 = getCostamount(self.costPricecountxiaohao2, self.today_price_list,"xiaohao2",AccountCost1,AccountMarketvalue1,self.sumTotaltokennum )
+        AccountCost3,AccountMarketvalue3,AccountFloatingloss3 = getCostamount(self.costPricecountOlStack1, self.today_price_list,"Stack",AccountCost2,AccountMarketvalue2,self.sumTotaltokennum )
         # 涨幅率=（现价data[1]-原价(costPricedic[symbol]])）/ 原价(costPricedic[symbol]]) * 100%
         increase_allAccount = (AccountMarketvalue3 - AccountCost3) / AccountCost3
         percentage_allAccount = "{:.2%}".format(increase_allAccount)
         time.sleep(30)
-        print("所有账户汇总持仓币种数量:{},成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{}".format(len(list(set(self.sumTotaltokennum))),math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount))
-        send_ding_msgs("所有账户汇总持仓品种数量:{},成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{}".format(len(list(set(self.sumTotaltokennum))),math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount),myself='alvin')
+        self.sumAccountFloatinglossToken = AccountFloatingloss1 + AccountFloatingloss2 + AccountFloatingloss3
+        print("所有账户汇总持仓品种数量:{},成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{},浮亏Token汇总:{}".format(len(list(set(self.sumTotaltokennum))),math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount,self.sumAccountFloatinglossToken))
+        send_ding_msgs("所有账户汇总持仓品种数量:{},成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{},浮亏币种数:{},浮亏Token汇总:{}".format(len(list(set(self.sumTotaltokennum))),math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount,len(self.sumAccountFloatinglossToken),self.sumAccountFloatinglossToken),myself='alvin')
         print("run get_current_earnings is end !")
 
 
