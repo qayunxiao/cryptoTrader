@@ -63,7 +63,7 @@ class run_priceX():
     def run_get_current_Xprice(self):
         print("run_get_current_Xprice is running....")
         get_data_pricepercentage(self.symbol_price, self.costPricedic, self.today_price_list)
-        X_List = [6,7,8,9]
+        X_List = [4,5,6,7,8,9,12,15,20]
         for x in X_List:
             get_data_Xprice(self.symbol_price, self.costPricedic, x, self.today_price_list)
         print("run_get_current_Xprice is end !")
