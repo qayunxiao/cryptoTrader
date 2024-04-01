@@ -78,8 +78,14 @@ class run_priceX():
         percentage_allAccount = "{:.2%}".format(increase_allAccount)
         time.sleep(30)
         self.sumAccountFloatinglossToken = AccountFloatingloss1 + AccountFloatingloss2 + AccountFloatingloss3
-        print("所有账户汇总持仓品种数量:{},成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{},浮亏Token汇总:{}".format(len(list(set(self.sumTotaltokennum))),math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount,self.sumAccountFloatinglossToken))
-        send_ding_msgs("所有账户汇总持仓品种数量:{},成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{},浮亏币种数:{},浮亏Token汇总:{}".format(len(list(set(self.sumTotaltokennum))),math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount,len(self.sumAccountFloatinglossToken),self.sumAccountFloatinglossToken),myself='alvin')
+        if len(self.sumAccountFloatinglossToken) > 0:
+            unique_coins = set(dic for d in self.sumAccountFloatinglossToken for dic in d)
+            coin_count = len(unique_coins)
+        else:
+            coin_count = 0
+
+        print("所有账户汇总持仓品种数量:{},成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{},浮亏币种数:{},浮亏Token汇总:{}".format(len(list(set(self.sumTotaltokennum))),math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount,coin_count,self.sumAccountFloatinglossToken))
+        send_ding_msgs("所有账户汇总持仓品种数量:{},成本U:{},持仓市值U:{},总盈亏U：{},汇总盈亏率:{},浮亏币种数:{},浮亏Token汇总:{}".format(len(list(set(self.sumTotaltokennum))),math_ceil_float(AccountCost3), math_ceil_float(AccountMarketvalue3),math_ceil_float(AccountMarketvalue3-AccountCost3),percentage_allAccount,coin_count,self.sumAccountFloatinglossToken),myself='alvin')
         print("run get_current_earnings is end !")
 
 
