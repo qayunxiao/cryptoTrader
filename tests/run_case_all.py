@@ -30,7 +30,7 @@ class run_priceX():
         self.sumTotaltokennum = []
         # self.symbol_price_history = ['BTC', 'ETH', 'DOT', 'FIL', 'LINK', 'UNI']
         self.symbol_price_history = ['BTC', 'ETH'] #大饼和山寨的历史数据分析
-        self.baibeisymbol_price = {'IOTX':0.038,'ZKF':0.01,'PYTH':0.4,'BONK':0.0000099,'BAKE':0.45,'MUBI':0.13,'SATS':0.00000075,'ONDO':0.32,'SEI':0.6}
+        self.baibeisymbol_price = {'ZKF':0.01,'PYTH':0.4,'BONK':0.0000099,'BAKE':0.45,'ONDO':0.32,'SEI':0.6}
         # 持仓币种列表
         self.symbol_price =['BTC','ETH','BNB', 'BLUR', 'STORJ', 'STX', 'GALA', 'PYTH', 'UNI', 'SOL', 'FIL', 'SUI', 'TIA', 'CKB', 'LINK', 'AGIX', 'AUCTION', 'ALT', 'CAKE', 'MANTA', 'RIF', 'IMX', 'WLD', 'AR', 'XAI', 'BIGTIME', 'ARB', 'DASH', 'IOTX' , 'PYTH', 'BONK', 'BAKE','1000SATS', 'SEI' , 'OP', 'SOL', 'ENS', 'NEAR', 'MATIC', 'SNX', 'LDO', 'ZEN', 'AAVE', 'SAND', 'APE', 'ICP', 'PEOPLE', 'DOGE', 'DYDX', 'NEO', 'ADA', 'APT', 'MAGIC', 'GLMR', 'MINA','ASTR']
         # 'GPT', 'ZETA', 'LOOKS', 'HONEY'
@@ -43,8 +43,8 @@ class run_priceX():
         self.costPricedic = {'BTC': 21328, 'ETH': 1588, 'DOT': 7, 'LINK': 6.5, 'FIL': 4.5, 'OP': 3.22, 'SOL': 64,
                              'ENS': 20,'NEAR': 1.1, 'PEOPLE': 0.0285, 'SNX': 3.8, 'DYDX': 1.96,
                              'STX': 0.49, 'DASH': 30, 'LDO': 3.05, 'SAND': 0.7, 'APE': 1.28, 'MATIC': 0.78,
-                             'DOGE': 0.0916,'ICP': 3.52, 'APT': 8.7, 'ADA': 0.26, 'MAGIC': 1.24,
-                             'MINA': 0.66, 'MANTA': 2.55, 'ATOM': 7.1, 'PYTH': 0.34, 'BLUR': 0.62, 'ALT': 0.35,'TIA': 15,'SEI': 0.59}
+                             'DOGE': 0.0916, 'APT': 8.7, 'ADA': 0.26, 'MAGIC': 1.24,
+                             'MANTA': 2.55, 'ATOM': 7.1, 'PYTH': 0.34, 'BLUR': 0.62, 'ALT': 0.35,'TIA': 15,'SEI': 0.59}
 
         self.costPricecountxiaohao1 = [{'BTC':[24920,0.5]},{'BTC':[25800,0.9]},{'BTC':[16000,0.15]},{'BTC':[15800,0.6]},{'BTC':[16800,0.76]},{'BTC':[21999,0.5]},{'BTC':[21700,0.4]},{'BTC':[21550,0.4]},{'BTC':[23450,0.4]},{'BTC':[23618,0.4]},{'BTC':[21200,0.5]},{'BTC':[20370,0.16655]},{'BTC':[21518,0.1]},{'BTC':[19955,0.3152]},{'ETH':[1484,10]},{'ETH':[1588,10]},{'ETH':[1975,2.7]},{'ETH':[2477,6]},{'ETH':[2500,4]},{'FIL':[5.37,1900]},{'SOL':[72.52,69]},{'LINK':[6,500]},{'LINK':[15,50]},{'NEAR':[1.16,1158]},{'UNI': [10.9, 100]}, {'UNI': [11.28, 500]},{'SNX':[3.8,324]},{'SNX':[3.6,375]},{'SNX':[3.52,800]},{'APT':[8.7,60]},{'APT':[10.4,300]},{'OP': [3.52, 2911]},{'GALA':[0.0275,72727]},{'STX':[2.14,2041]},{'PEOPLE':[0.0285,100000]},{'APE':[1.62,1000]},{'APE':[1.28,1075]},{'SAND':[0.3095,646]},{'SAND':[0.7,3000]},{'DOGE':[0.0916,10917]},{'ALT':[0.35,3000]},{'SEI':[0.59,1522]},{'TIA': [16.8, 114]}, {'TIA': [15.4, 100]}]
         self.costPricecountxiaohao2 = [{'BNB': [306, 7]}, {'BNB': [280, 10]}, {'BNB': [366, 8]}, {'BNB': [377, 6]},{'ARKM': [2.69, 4293]}, {'FET': [2.89, 2283]}, {'ENS': [29, 182]}]
