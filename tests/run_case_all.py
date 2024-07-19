@@ -32,7 +32,7 @@ class run_priceX():
         self.symbol_price_history = ['BTC', 'ETH'] #大饼和山寨的历史数据分析
         self.baibeisymbol_price = {'ONDO':0.32,'ZKF':0.01,'BONK':0.0000099,'BAKE':0.45}
         # 持仓币种列表
-        self.symbol_price =['BTC','ETH','BNB', 'BLUR', 'STORJ', 'STX', 'GALA', 'PYTH', 'UNI', 'SOL', 'FIL', 'SUI', 'TIA', 'CKB', 'LINK', 'AGIX', 'AUCTION', 'ALT', 'CAKE', 'MANTA', 'RIF', 'IMX', 'WLD', 'AR', 'XAI', 'BIGTIME', 'ARB', 'DASH', 'IOTX' , 'PYTH', 'BONK', 'BAKE','1000SATS', 'SEI' , 'OP', 'SOL', 'ENS', 'NEAR', 'MATIC', 'SNX', 'LDO', 'ZEN', 'AAVE', 'SAND', 'APE', 'ICP', 'PEOPLE', 'DOGE', 'DYDX', 'NEO', 'ADA', 'APT', 'MAGIC', 'GLMR', 'MINA','ASTR']
+        self.symbol_price =['BTC','ETH','BNB', 'BLUR', 'STORJ', 'STX', 'GALA', 'PYTH', 'UNI', 'SOL', 'FIL', 'SUI', 'TIA', 'CKB', 'LINK', 'AUCTION', 'ALT', 'CAKE', 'MANTA', 'RIF', 'IMX', 'WLD', 'AR', 'XAI', 'BIGTIME', 'ARB', 'DASH', 'IOTX' , 'PYTH', 'BONK', 'BAKE','1000SATS', 'SEI' , 'OP', 'SOL', 'ENS', 'NEAR', 'MATIC', 'SNX', 'LDO', 'ZEN', 'AAVE', 'SAND', 'APE', 'ICP', 'PEOPLE', 'DOGE', 'DYDX', 'NEO', 'ADA', 'APT', 'MAGIC', 'GLMR', 'MINA','ASTR']
         # 'GPT', 'ZETA', 'LOOKS', 'HONEY'
         # self.symbol_price =['BTC','ETH','BNB', 'BLUR', 'STORJ', 'STX', 'GALA', 'PYTH', 'UNI', 'SOL', 'FIL', 'SUI', 'TIA', 'CKB', 'LINK', 'AGIX', 'AUCTION', 'ALT', 'CAKE', 'MANTA', 'RIF', 'IMX', 'WLD', 'AR', 'XAI', 'BIGTIME', 'GPT', 'ZETA', 'LOOKS', 'HONEY', 'ARB', 'DASH', 'IOTX', 'ZKF', 'PYTH', 'BONK', 'BAKE', 'MUBI', 'SATS', 'ONDO', 'SEI', 'HNT', 'CHAX', 'OP', 'SOL', 'ENS', 'NEAR', 'MATIC', 'SNX', 'LDO', 'ZEN', 'AAVE', 'SAND', 'APE', 'ICP', 'PEOPLE', 'DOGE', 'DYDX', 'NEO', 'ADA', 'APT', 'MAGIC', 'GLMR', 'MINA', 'OKB', 'ASTR', 'CSPR', 'ZBC']
         self.sumTotalAccountCost = 0
