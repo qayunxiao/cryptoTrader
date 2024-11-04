@@ -92,7 +92,7 @@ class run_priceX():
 
 if __name__ == '__main__':
     run_x = run_priceX()
-    run_x.run_get_history_data()
+    # run_x.run_get_history_data()
     run_x.run_get_current_price()
     run_x.run_get_current_Xprice()
     run_x.run_get_current_earnings()

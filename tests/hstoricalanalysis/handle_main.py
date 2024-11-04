@@ -74,8 +74,8 @@ if __name__ == '__main__':
      # 综合抄底判断
     if fear_value[0] < 40 or resapi_ahr_data_today["ahr999"] < 0.5:
     # if fear_value[0] < 40:
-        log.error("Tips综合抄底判断:当前恐慌指数:43.0,当前ahr999值:0.4462 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
-        send_ding_msgs("Tips综合抄底判断:当前恐慌指数:43.0,当前ahr999值:0.4462 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        log.error("Tips综合抄底判断:当前恐慌指数:40,当前ahr999值:0.5 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
+        send_ding_msgs("Tips综合抄底判断:当前恐慌指数:40,当前ahr999值:0.5 考虑分批抄底，当恐慌低于20是理想抄底机会".format(fear_value[0], resapi_ahr_data_today['ahr999']))
 
     # 逃顶判断
     if fear_value[0] > 90 or resapi_ahr_data_today["ahr999"]  > 1.2:
