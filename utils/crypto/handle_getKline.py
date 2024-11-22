@@ -278,8 +278,10 @@ def get_data_price(symbol_list, price_date, today_price_list):
         if binance_exchange.has['fetchOHLCV']:
             # print("fetchOHLCV is :{}".format(binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d')))
             kline_data = binance_exchange.fetch_ohlcv(symbol_usdt, timeframe='1d', since=int(price_date))
+            sleeptime = random.randint(5, 10)
+            log.info("symbol is :{},sleeptime is:{}".format(symbol,sleeptime))
             print("kline_data is:{},symbol is :{} ,close price is :{}".format(kline_data,symbol,(kline_data[-1][-2])))
-            time.sleep(random.randint(5, 10))
+            time.sleep(sleeptime)
             #  处理数据格式 时间戳毫秒改日期格式
             kline_df = pd.DataFrame(kline_data, columns=["time", "open", "high", "low", "close", "vol"])
             # to_datetime  将时间戳毫秒转日期 -unit='ms'

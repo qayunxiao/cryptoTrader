@@ -4,7 +4,7 @@
 # @File    : handle_numpy.py
 # @Software: PyCharm
 import  numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 # import matplotlib.finance as mpf
 
 def testReadFile():

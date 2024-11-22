@@ -66,7 +66,7 @@ def send_ding_msg_byfilepath(filepath):
             "msgtype": "text"
         }
         log.info("send_ding_msg_byfilepath msg is:{}".format(msg))
-        return requests.post(url=url, data=json.dumps(data), headers=headers).text
+        # return requests.post(url=url, data=json.dumps(data), headers=headers).text
 
 def send_ding_msgs(msg,myself=None):
     # print("config_path", config_path)
@@ -101,7 +101,7 @@ def send_ding_msgs(msg,myself=None):
         "msgtype": "text"
     }
     log.info("msg is:{}".format(msg))
-    return requests.post(url=url, data=json.dumps(data), headers=headers).text
+    # return requests.post(url=url, data=json.dumps(data), headers=headers).text
 
 
 if __name__ == "__main__":
