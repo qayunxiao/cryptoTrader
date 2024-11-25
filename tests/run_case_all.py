@@ -58,7 +58,7 @@ class run_priceX():
         get_data_price(self.symbol_price, str(datetime.datetime.now().date()), self.today_price_list)
         #send_ding_msgs("中长线持仓成本价:{}".format(self.costPricedic))
         send_ding_msgs("日期是:{},百倍币持仓币种数量:{},成本价:{}".format(str(datetime.datetime.now().date()),len(self.baibeisymbol_price), self.baibeisymbol_price,myself='alvin'))
-        # send_ding_msgs("日期是:{},百倍币持仓币种数量:{},成本价:{}".format(str(datetime.datetime.now().date()),len(self.baibeisymbol_price), self.baibeisymbol_price),myself='alvin')
+        send_ding_msgs("日期是:{},百倍币持仓币种数量:{},成本价:{}".format(str(datetime.datetime.now().date()),len(self.baibeisymbol_price), self.baibeisymbol_price),myself='alvin')
 
     def run_get_current_Xprice(self):
         print("run_get_current_Xprice is running....")
